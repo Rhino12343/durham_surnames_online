@@ -192,9 +192,10 @@ class Surname_admin extends CI_Model
         return $query->result_array();
     }
 
-    public function get_parishes($ward_id) {
+    public function get_parishes($ward_id = null) {
         $sql = '
             SELECT parish_id,
+                   ward_id,
                    name
               FROM DSO_parish
         ';
@@ -231,6 +232,61 @@ class Surname_admin extends CI_Model
 
         $sql = 'DELETE FROM DSO_parish_surname
                       WHERE parish_surname_id = ' . $parish_surname_id;
+
+        $query = $this->db->query($sql);
+
+        return (bool)($this->db->affected_rows() > 0);
+    }
+
+    public function new_ward() {
+        $sql = 'INSERT INTO DSO_ward (name) VALUES ("")';
+
+        $query = $this->db->query($sql);
+
+        return $this->db->insert_id();
+    }
+
+    public function save_ward($ward_id, $ward) {
+        $sql = 'UPDATE DSO_ward
+                   SET name = "' . $ward . '"
+                 WHERE ward_id = ' . $ward_id;
+
+        $query = $this->db->query($sql);
+
+        return (bool)($this->db->affected_rows() > 0);
+    }
+
+    public function delete_ward($ward_id) {
+        $sql = 'DELETE FROM DSO_ward
+                      WHERE ward_id = ' . $ward_id;
+
+        $query = $this->db->query($sql);
+
+        return (bool)($this->db->affected_rows() > 0);
+    }
+
+    public function new_parish() {
+        $sql = 'INSERT INTO DSO_parish (name) VALUES ("")';
+
+        $query = $this->db->query($sql);
+
+        return $this->db->insert_id();
+    }
+
+    public function save_parish($ward_id, $parish_id, $parish) {
+        $sql = 'UPDATE DSO_parish
+                   SET name = "' . $parish . '",
+                       ward_id = ' . $ward_id . '
+                 WHERE parish_id = ' . $parish_id;
+
+        $query = $this->db->query($sql);
+
+        return (bool)($this->db->affected_rows() > 0);
+    }
+
+    public function delete_parish($parish_id) {
+        $sql = 'DELETE FROM DSO_parish
+                      WHERE parish_id = ' . $parish_id;
 
         $query = $this->db->query($sql);
 

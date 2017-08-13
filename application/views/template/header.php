@@ -23,6 +23,7 @@
                     <li><a href="<?= base_url(); ?>about">About The Project</a></li>
                     <?php if ($this->ion_auth->is_admin()) { ?>
                         <li><a href="<?= base_url(); ?>admin">Admin Surname List</a></li>
+                        <li><a href="<?= base_url(); ?>admin/ward_and_parish">Admin Ward &amp; Parish</a></li>
                     <?php } ?>
                 </ul>
             </div>

@@ -55,20 +55,11 @@
     <?php } ?>
 
     <div class="row surname_btn_container">
-        <?php if ($ward_id > 0 && $parish_id > 0) { ?>
-            <div class="large-7 columns">&nbsp;</div>
-            <div class="large-5 columns">
-                <input type="button" id="surname_search_btn" value="Search">
-                <input type="button" id="new_surname_btn" value="New Surname">
-                <input type="button" id="edit_parish_btn" value="Edit Parish">
-            </div>
-        <?php } else { ?>
             <div class="large-8 columns">&nbsp;</div>
             <div class="large-4 columns">
                 <input type="button" id="surname_search_btn" value="Search">
                 <input type="button" id="new_surname_btn" value="New Surname">
             </div>
-        <?php } ?>
     </div>
 </div>
 
@@ -122,7 +113,7 @@
                 }
             }).done(function(data) {
                 location.reload();
-            })
+            });
         });
 
         $('#surname_search_btn').on('click', function(e) {
@@ -146,12 +137,6 @@
         $('.parish_filter').on('change', function(e) {
             e.preventDefault();
             window.location.replace("<?php echo base_url(); ?>" + 'admin/?ward_id=<?php echo $ward_id; ?>&parish_id=' + $('.parish_filter option:selected').val() + '&sq=' + search_query);
-        });
-
-        $('#edit_parish_btn').on('click', function(e) {
-            e.preventDefault();
-
-            window.location.replace('<?= base_url(); ?>admin/edit_parish/?ward_id=<?= $ward_id ?>&parish_id=<?= $parish_id ?>');
         });
     })(jQuery);
 </script>

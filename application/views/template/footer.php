@@ -1,4 +1,5 @@
         </div>
+        <footer></footer>
 
         <script src="<?= base_url(); ?>js/foundation.js"></script>
         <script>
