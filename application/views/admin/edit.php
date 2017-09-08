@@ -176,8 +176,7 @@
 
         $('a.close_variants').on('click', function(e) {
             e.preventDefault();
-            $('.variants_input').hide();
-            $('div#variants').show();
+            location.reload();
         });
 
         $('.new_variant').on('click', function(e) {

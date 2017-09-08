@@ -10,7 +10,6 @@
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     </head>
     <body>
-        <!-- Start Top Bar -->
         <div class="top-bar">
             <div class="top-bar-left">
                 <ul class="menu">
@@ -24,11 +23,11 @@
                     <?php if ($this->ion_auth->is_admin()) { ?>
                         <li><a href="<?= base_url(); ?>admin">Admin Surname List</a></li>
                         <li><a href="<?= base_url(); ?>admin/ward_and_parish">Admin Ward &amp; Parish</a></li>
+                        <li><a href="<?= base_url(); ?>bulk">Bulk Upload</a></li>
                     <?php } ?>
                 </ul>
             </div>
         </div>
-        <!-- End Top Bar -->
 
         <div class="callout large primary">
             <div class="row column text-center">
@@ -36,6 +35,4 @@
                 <h4 class="subheader">An analysis of the historic distribution and incidence of Durham surnames in the sixteenth century.</h4>
             </div>
         </div>
-
-        <!-- We can now combine rows and columns when there's only one column in that row -->
         <div class="row medium-8 large-7 columns">

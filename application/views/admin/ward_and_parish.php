@@ -36,6 +36,7 @@
                         <a class="delete_ward"><i class="fi-trash"></i></a>
                     </td>
                 </tr>
+                <tr>&nbsp;</tr>
                 <tr>
                     <td>
                         <a class="new_ward">
@@ -99,6 +100,7 @@
                         <a class="delete_parish"><i class="fi-trash"></i></a>
                     </td>
                 </tr>
+                <tr>&nbsp;</tr>
                 <tr>
                     <td>
                         <a class="new_parish">
