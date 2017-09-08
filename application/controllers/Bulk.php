@@ -74,6 +74,10 @@ class Bulk extends CI_Controller {
 
                     while($file_data = fgetcsv($fp))
                     {
+                        if (strtolower($file_data[0]) === 'surname'){
+                            continue;
+                        }
+
                         $surname = '';
 
                         foreach($file_data as $index => $column) {
@@ -98,12 +102,15 @@ class Bulk extends CI_Controller {
                     foreach ($surname_data as $surname => $variants) {
                         $surname_id = $this->import_admin->get_surname_id($surname);
 
-                        if (!isset($surname_id)) {
-                            $this->data['errors']['surnames']['no_import'][] = $surname;
+                        if (!isset($surname_id) || $surname_id == 0) {
+                            $surname_id = $this->import_admin->save_surname($surname);
                         }
 
-                        // check if variant exists
-                        // if variant doesn't exist save it
+                        foreach ($variants as $variant) {
+                            if (!$this->import_admin->surname_has_variant($surname_id, $variant)) {
+                                $this->import_admin->save_variant($surname_id, $variant);
+                            }
+                        }
                     }
                 }
             }
@@ -111,7 +118,6 @@ class Bulk extends CI_Controller {
             $this->load->view('template/header');
             $this->load->view('admin/bulk', $this->data);
             $this->load->view('template/footer');
-
         }
     }
 
@@ -131,6 +137,77 @@ class Bulk extends CI_Controller {
         {
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+            // set the flash data error message if there is one
+            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+
+            $submitted = $this->input->post("upload_data");
+
+            if (isset($submitted))
+            {
+                $config['upload_path']   = './uploads/';
+                $config['allowed_types'] = 'csv';
+                $config['encrypt_name']  = true;
+
+                $this->load->library('upload', $config);
+
+                if (!$this->upload->do_upload('surname_data'))
+                {
+                    $this->data['message'] = $this->upload->display_errors();
+                } else {
+                    $upload_data = $this->upload->data();
+                    $fp = fopen($upload_data['full_path'], 'r');
+                    $surname_data = array();
+
+                    while ($file_data = fgetcsv($fp))
+                    {
+                        if (strtolower($file_data[0]) == 'surname'){
+                            continue;
+                        }
+
+                        if (!isset($surname_data[strtolower($file_data[1])]) ||
+                            !is_array($surname_data[strtolower($file_data[1])])){
+                            $surname_data[strtolower($file_data[1])] = array();
+                        }
+
+                        if (!isset($surname_data[strtolower($file_data[1])][strtolower($file_data[2])]) ||
+                            !is_array($surname_data[strtolower($file_data[1])][strtolower($file_data[2])])){
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])] = array();
+                        }
+
+                        if (!isset($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])]) ||
+                            !is_array($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])])){
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])] = array();
+                        }
+
+                        if (!isset($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]) ||
+                            !is_array($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]])){
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]] = array();
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['births'] = $file_data[4];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['marriages'] = $file_data[5];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['baptisms'] = $file_data[6];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['burials'] = $file_data[7];
+                        } else {
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['births'] += $file_data[4];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['marriages'] += $file_data[5];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['baptisms'] += $file_data[6];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['burials'] += $file_data[7];
+                        }
+                    }
+
+                    fclose($fp);
+
+                    // loop over $surname_data
+                    // assign ward_id from ward name
+                    // loop over parishes from ward and get parish_id from parish name
+                    // loop over surnames from parish and get surname_id
+                    // check if surname_id is associated with parish_id and ward_id
+                    // if not assign and return parish_surname_id
+                    // use parish_surname_id and check if year is stored in DSO_parish_surname_data
+                    // if it is add to the totals
+                    // else add the year to DSO_parish_surname_data
+                }
+            }
 
             $this->load->view('template/header');
             $this->load->view('admin/bulk', $this->data);
