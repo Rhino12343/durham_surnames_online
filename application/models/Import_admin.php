@@ -12,8 +12,11 @@
         {
             $sql = '
                 SELECT surname_id
-                  FROM DSO_surname
-                 WHERE surname = "' . $surname . '"';
+                  FROM DSO_surname AS s
+            INNER JOIN DSO_variant AS v ON v.surname_id = s.surname_id
+                 WHERE LOWER(s.surname) = LOWER("' . $surname . '")
+                    OR LOWER(v.variant) = LOWER("' . $surname . '")
+            ';
 
             $query = $this->db->query($sql);
 
@@ -53,5 +56,81 @@
             ';
 
             $this->db->query($sql);
+        }
+
+        public function get_ward_id($ward)
+        {
+            $sql = '
+                SELECT ward_id
+                  FROM DSO_ward
+                 WHERE LOWER(name) = LOWER("' . $ward . '")
+            ';
+
+            $query = $this->db->query($sql);
+
+            return (int)$query->row_array()['ward_id'];
+        }
+
+        public function add_ward($ward) {
+            $sql = '
+                INSERT INTO DSO_ward (name) VALUES
+                                     ("' . $ward . '")
+            ';
+
+            $this->db->query($sql);
+
+            return $this->db->insert_id();
+        }
+
+        public function get_parish_id($parish, $ward_id)
+        {
+            $sql = '
+                SELECT parish_id
+                  FROM DSO_parish
+                 WHERE LOWER(name) = LOWER("' . $parish . '")
+                   AND ward_id = ' . $ward_id . '
+            ';
+
+            $query = $this->db->query($sql);
+
+            return (int)$query->row_array()['parish_id'];
+        }
+
+        public function assign_parish_to_ward($parish, $ward_id)
+        {
+            $sql = '
+                INSERT INTO DSO_parish (name, ward_id) VALUES
+                                       ("' . $parish . '", ' . $ward_id . ')
+            ';
+
+            $this->db->query($sql);
+
+            return $this->db->insert_id();
+        }
+
+        public function get_parish_surname_id($surname_id, $parish_id)
+        {
+            $sql = '
+                SELECT parish_surname_id
+                  FROM DSO_parish_surname
+                 WHERE parish_id = ' . $parish_id . '
+                   AND surname_id = ' . $surname_id . '
+            ';
+
+            $query = $this->db->query($sql);
+
+            return (int)$query->row_array()['parish_surname_id'];
+        }
+
+        public function assign_surname($surname_id, $parish_id)
+        {
+            $sql = '
+                INSERT INTO DSO_parish_surname (parish_id, surname_id) VALUES
+                                               ('. $parish_id . ', ' . $surname_id .')
+            ';
+
+            $this->db->query($sql);
+
+            return $this->db->insert_id();
         }
     }

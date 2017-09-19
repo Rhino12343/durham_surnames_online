@@ -97,8 +97,6 @@ class Bulk extends CI_Controller {
 
                     fclose($fp);
 
-                    $this->data['errors']['surnames']['no_import'] = array();
-
                     foreach ($surname_data as $surname => $variants) {
                         $surname_id = $this->import_admin->get_surname_id($surname);
 
@@ -206,6 +204,42 @@ class Bulk extends CI_Controller {
                     // use parish_surname_id and check if year is stored in DSO_parish_surname_data
                     // if it is add to the totals
                     // else add the year to DSO_parish_surname_data
+
+                    foreach ($surname_data as $ward => $parishes){
+                        $ward_id = $this->import_admin->get_ward_id($ward);
+
+                        if ($ward_id == 0) {
+                            $ward_id = $this->import_admin->add_ward($ward);
+                        }
+
+                        foreach ($parishes as $parish => $surnames){
+                            $parish_id = $this->import_admin->get_parish_id($parish, $ward_id);
+
+                            if ($parish_id == 0) {
+                                $parish_id = $this->import_admin->assign_parish_to_ward($parish_id, $ward_id);
+                            }
+
+                            foreach ($surnames as $surname => $surname_data){
+                                $surname_id = $this->import_admin->get_surname_id($surname);
+
+                                if ($surname_id == 0) {
+                                    $this->data['errors'][] = 'Surname: ' . $surname . ' was not found, please add the surname to ward: ' . $ward . ' and parish: ' . $parish . ' and try again';
+                                    continue;
+                                }
+
+
+                                $surname_data_id = $this->import_admin->get_parish_surname_id($surname_id, $parish_id);
+
+                                if ($surname_data_id == 0) {
+                                    $surname_data_id = $this->import_admin->assign_surname($surname_id, $parish_id);
+                                }
+
+                                foreach ($surname_data as $year => $year_data){
+                                    echo $surname . ' ' . $surname_id . ' ' . $ward . ' ' . $ward_id . ' ' . $parish . ' ' . $parish_id . ' ' . $year . ' ' . $year_data['marriages'] . '<br>';
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
