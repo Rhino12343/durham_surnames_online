@@ -17,6 +17,10 @@
                 <input type="file" name="surnames">
                 <p><?php echo form_submit('upload_surnames', "Upload");?></p>
                 <?php echo form_close(); ?>
+
+                <?php if ($surname_upload) { ?>
+                    <h5><b><u>Variant Upload Completed</u></b></h5>
+                <?php } ?>
             </div>
             <div class="large-12 columns">
                 <?php if (isset($errors['surnames']['no_import']) && count($errors['surnames']['no_import']) > 0) { ?>
@@ -48,6 +52,25 @@
                 <input type="file" name="surname_data">
                 <p><?php echo form_submit('upload_data', "Upload");?></p>
                 <?php echo form_close(); ?>
+
+                <?php if ($surname_data_upload) { ?>
+                    <h5><b><u>Data Upload Completed</u></b></h5>
+                <?php } ?>
+            </div>
+            <div class="large-12 columns">
+                <?php if (isset($errors['surname_data_errors']) && count($errors['surname_data_errors']) > 0) { ?>
+                    <h5>Unable to import the following:</h5>
+                    <h6>Please ensure that a valid surname exists for them.</h6>
+                    <table>
+                        <?php foreach ($errors['surname_data_errors'] as $message){ ?>
+                            <tr>
+                                <td>
+                                    <?= $message ?>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </table>
+                <?php } ?>
             </div>
         </div>
     </div>

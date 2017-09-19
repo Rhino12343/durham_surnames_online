@@ -11,7 +11,7 @@
         public function get_surname_id($surname)
         {
             $sql = '
-                SELECT surname_id
+                SELECT s.surname_id
                   FROM DSO_surname AS s
             INNER JOIN DSO_variant AS v ON v.surname_id = s.surname_id
                  WHERE LOWER(s.surname) = LOWER("' . $surname . '")
@@ -25,6 +25,8 @@
 
         public function save_surname($surname)
         {
+            $surname = ucwords($surname);
+
             $sql = '
                 INSERT INTO DSO_surname (surname) VALUES ("' . $surname . '")
             ';
@@ -50,6 +52,8 @@
 
         public function save_variant($surname_id, $variant)
         {
+            $variant = ucwords($variant);
+
             $sql = '
                 INSERT INTO DSO_variant(surname_id, variant) VALUES
                             (' . $surname_id . ', "' . $variant . '")
@@ -72,6 +76,8 @@
         }
 
         public function add_ward($ward) {
+            $ward = ucwords($ward);
+
             $sql = '
                 INSERT INTO DSO_ward (name) VALUES
                                      ("' . $ward . '")
@@ -98,6 +104,8 @@
 
         public function assign_parish_to_ward($parish, $ward_id)
         {
+            $parish = ucwords($parish);
+
             $sql = '
                 INSERT INTO DSO_parish (name, ward_id) VALUES
                                        ("' . $parish . '", ' . $ward_id . ')
@@ -132,5 +140,18 @@
             $this->db->query($sql);
 
             return $this->db->insert_id();
+        }
+
+        public function save_surname_data($parish_surname_id, $year, $births, $marriages, $baptisms, $burials)
+        {
+            $sql = '
+                INSERT INTO DSO_parish_surname_data (parish_surname_id, year, births, marriages, baptisms, burials) VALUES
+                                                    (' . $parish_surname_id . ', ' . $year . ', ' . $births . ', ' . $marriages . ', ' . $baptisms . ', ' . $burials . ')
+                            ON DUPLICATE KEY UPDATE births = ' . $births . ', marriages = ' . $marriages . ', baptisms = ' . $baptisms . ', burials = ' . $burials . '
+            ';
+
+            $this->db->query($sql);
+
+            return (bool)($this->db->affected_rows() > 0);
         }
     }

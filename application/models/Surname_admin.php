@@ -7,6 +7,8 @@ class Surname_admin extends CI_Model
     }
 
     public function update_surname($surname_id, $surname) {
+        $surname = ucwords($surname);
+
         $sql = '
             UPDATE DSO_surname
                SET surname = "' . $surname . '"
@@ -142,6 +144,8 @@ class Surname_admin extends CI_Model
     }
 
     public function save_variant($variant_id, $variant) {
+        $variant = ucwords($variant);
+
         $sql = '
             UPDATE DSO_variant
                SET variant = "' . $variant . '"
@@ -210,6 +214,8 @@ class Surname_admin extends CI_Model
     }
 
     public function save_surname($parish_id, $surname) {
+        $surname = ucwords($surname);
+
         $sql = 'INSERT INTO DSO_surname (surname) VALUES ("' . $surname . '")';
 
         $query = $this->db->query($sql);
@@ -247,6 +253,8 @@ class Surname_admin extends CI_Model
     }
 
     public function save_ward($ward_id, $ward) {
+        $ward = ucwords($ward);
+
         $sql = 'UPDATE DSO_ward
                    SET name = "' . $ward . '"
                  WHERE ward_id = ' . $ward_id;
@@ -274,6 +282,8 @@ class Surname_admin extends CI_Model
     }
 
     public function save_parish($ward_id, $parish_id, $parish) {
+        $parish = ucwords($parish);
+
         $sql = 'UPDATE DSO_parish
                    SET name = "' . $parish . '",
                        ward_id = ' . $ward_id . '

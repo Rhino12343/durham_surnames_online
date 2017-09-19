@@ -29,6 +29,8 @@ class Bulk extends CI_Controller {
         {
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+            $this->data['surname_upload'] = false;
+            $this->data['surname_data_upload'] = false;
 
             $this->load->view('template/header');
             $this->load->view('admin/bulk', $this->data);
@@ -55,6 +57,8 @@ class Bulk extends CI_Controller {
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
             $submitted = $this->input->post("upload_surnames");
+            $this->data['surname_upload'] = false;
+            $this->data['surname_data_upload'] = false;
 
             if (isset($submitted))
             {
@@ -71,6 +75,7 @@ class Bulk extends CI_Controller {
                     $upload_data = $this->upload->data();
                     $fp = fopen($upload_data['full_path'], 'r');
                     $surname_data = array();
+                    $this->data['surname_upload'] = true;
 
                     while($file_data = fgetcsv($fp))
                     {
@@ -140,6 +145,8 @@ class Bulk extends CI_Controller {
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
             $submitted = $this->input->post("upload_data");
+            $this->data['surname_upload'] = false;
+            $this->data['surname_data_upload'] = false;
 
             if (isset($submitted))
             {
@@ -156,6 +163,7 @@ class Bulk extends CI_Controller {
                     $upload_data = $this->upload->data();
                     $fp = fopen($upload_data['full_path'], 'r');
                     $surname_data = array();
+                    $this->data['surname_data_upload'] = true;
 
                     while ($file_data = fgetcsv($fp))
                     {
@@ -202,8 +210,7 @@ class Bulk extends CI_Controller {
                     // check if surname_id is associated with parish_id and ward_id
                     // if not assign and return parish_surname_id
                     // use parish_surname_id and check if year is stored in DSO_parish_surname_data
-                    // if it is add to the totals
-                    // else add the year to DSO_parish_surname_data
+                    // add the year to DSO_parish_surname_data
 
                     foreach ($surname_data as $ward => $parishes){
                         $ward_id = $this->import_admin->get_ward_id($ward);
@@ -216,26 +223,29 @@ class Bulk extends CI_Controller {
                             $parish_id = $this->import_admin->get_parish_id($parish, $ward_id);
 
                             if ($parish_id == 0) {
-                                $parish_id = $this->import_admin->assign_parish_to_ward($parish_id, $ward_id);
+                                $parish_id = $this->import_admin->assign_parish_to_ward($parish, $ward_id);
                             }
 
                             foreach ($surnames as $surname => $surname_data){
                                 $surname_id = $this->import_admin->get_surname_id($surname);
 
                                 if ($surname_id == 0) {
-                                    $this->data['errors'][] = 'Surname: ' . $surname . ' was not found, please add the surname to ward: ' . $ward . ' and parish: ' . $parish . ' and try again';
+                                    $this->data['errors']['surname_data_errors'][] = 'Surname: ' . $surname . ' was not found, please add the surname to ward: ' . $ward . ' and parish: ' . $parish . ' and try again';
                                     continue;
                                 }
 
+                                $parish_surname_id = $this->import_admin->get_parish_surname_id($surname_id, $parish_id);
 
-                                $surname_data_id = $this->import_admin->get_parish_surname_id($surname_id, $parish_id);
-
-                                if ($surname_data_id == 0) {
-                                    $surname_data_id = $this->import_admin->assign_surname($surname_id, $parish_id);
+                                if ($parish_surname_id == 0) {
+                                    $parish_surname_id = $this->import_admin->assign_surname($surname_id, $parish_id);
                                 }
 
                                 foreach ($surname_data as $year => $year_data){
-                                    echo $surname . ' ' . $surname_id . ' ' . $ward . ' ' . $ward_id . ' ' . $parish . ' ' . $parish_id . ' ' . $year . ' ' . $year_data['marriages'] . '<br>';
+                                    $success = $this->import_admin->save_surname_data($parish_surname_id, $year, $year_data['births'], $year_data['marriages'], $year_data['baptisms'], $year_data['burials']);
+
+                                    if (!$success) {
+                                        $this->data['errors']['surname_data_errors'][] = 'An error occured while uploading the data for surname: ' . $surname . ', year: ' . $year. ', ward: ' . $ward . ', and parish: ' . $parish;
+                                    }
                                 }
                             }
                         }
