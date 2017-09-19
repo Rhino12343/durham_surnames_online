@@ -23,6 +23,27 @@
             return (int)$query->row_array()['surname_id'];
         }
 
+        public function get_surname_for_variant($variant)
+        {
+            $sql = '
+                SELECT s.surname
+                  FROM DSO_surname AS s
+            INNER JOIN DSO_variant AS v ON v.surname_id = s.surname_id
+                 WHERE LOWER(s.surname) = LOWER("' . $variant . '")
+                    OR LOWER(v.variant) = LOWER("' . $variant . '")
+            ';
+
+            $query = $this->db->query($sql);
+
+            $surname = $query->row_array()['surname'];
+
+            if (strlen($surname) > 0) {
+                return $surname;
+            } else {
+                return $variant;
+            }
+        }
+
         public function save_surname($surname)
         {
             $surname = ucwords($surname);

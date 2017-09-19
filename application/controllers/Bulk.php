@@ -79,7 +79,7 @@ class Bulk extends CI_Controller {
 
                     while($file_data = fgetcsv($fp))
                     {
-                        if (strtolower($file_data[0]) === 'surname'){
+                        if (strtolower($surname) === 'surname'){
                             continue;
                         }
 
@@ -181,23 +181,25 @@ class Bulk extends CI_Controller {
                             $surname_data[strtolower($file_data[1])][strtolower($file_data[2])] = array();
                         }
 
-                        if (!isset($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])]) ||
-                            !is_array($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])])){
-                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])] = array();
+                        $surname = $this->import_admin->get_surname_for_variant($file_data[0]);
+
+                        if (!isset($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)]) ||
+                            !is_array($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)])){
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)] = array();
                         }
 
-                        if (!isset($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]) ||
-                            !is_array($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]])){
-                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]] = array();
-                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['births'] = $file_data[4];
-                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['marriages'] = $file_data[5];
-                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['baptisms'] = $file_data[6];
-                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['burials'] = $file_data[7];
+                        if (!isset($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]) ||
+                            !is_array($surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]])){
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]] = array();
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['births'] = $file_data[4];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['marriages'] = $file_data[5];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['baptisms'] = $file_data[6];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['burials'] = $file_data[7];
                         } else {
-                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['births'] += $file_data[4];
-                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['marriages'] += $file_data[5];
-                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['baptisms'] += $file_data[6];
-                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($file_data[0])][$file_data[3]]['burials'] += $file_data[7];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['births'] += $file_data[4];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['marriages'] += $file_data[5];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['baptisms'] += $file_data[6];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['burials'] += $file_data[7];
                         }
                     }
 
@@ -244,7 +246,7 @@ class Bulk extends CI_Controller {
                                     $success = $this->import_admin->save_surname_data($parish_surname_id, $year, $year_data['births'], $year_data['marriages'], $year_data['baptisms'], $year_data['burials']);
 
                                     if (!$success) {
-                                        $this->data['errors']['surname_data_errors'][] = 'An error occured while uploading the data for surname: ' . $surname . ', year: ' . $year. ', ward: ' . $ward . ', and parish: ' . $parish;
+                                        $this->data['errors']['surname_data_errors'][] = 'An error occured while uploading the data for surname: ' . $surname . ', year: ' . $year. ', ward: ' . $ward . ', and parish: ' . $parish . ' please check for duplicate data being imported';
                                     }
                                 }
                             }
