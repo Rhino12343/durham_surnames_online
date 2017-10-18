@@ -13,7 +13,7 @@
             $sql = '
                 SELECT s.surname_id
                   FROM DSO_surname AS s
-            INNER JOIN DSO_variant AS v ON v.surname_id = s.surname_id
+             LEFT JOIN DSO_variant AS v ON v.surname_id = s.surname_id
                  WHERE LOWER(s.surname) = LOWER("' . $surname . '")
                     OR LOWER(v.variant) = LOWER("' . $surname . '")
             ';
@@ -28,7 +28,7 @@
             $sql = '
                 SELECT s.surname
                   FROM DSO_surname AS s
-            INNER JOIN DSO_variant AS v ON v.surname_id = s.surname_id
+             LEFT JOIN DSO_variant AS v ON v.surname_id = s.surname_id
                  WHERE LOWER(s.surname) = LOWER("' . $variant . '")
                     OR LOWER(v.variant) = LOWER("' . $variant . '")
             ';
@@ -167,12 +167,10 @@
         {
             $sql = '
                 INSERT INTO DSO_parish_surname_data (parish_surname_id, year, births, marriages, baptisms, burials) VALUES
-                                                    (' . $parish_surname_id . ', ' . $year . ', ' . $births . ', ' . $marriages . ', ' . $baptisms . ', ' . $burials . ')
-                            ON DUPLICATE KEY UPDATE births = ' . $births . ', marriages = ' . $marriages . ', baptisms = ' . $baptisms . ', burials = ' . $burials . '
+                                                    ("' . $parish_surname_id . '", "' . $year . '", "' . $births . '", "' . $marriages . '", "' . $baptisms . '", "' . $burials . '")
+                            ON DUPLICATE KEY UPDATE births = "' . $births . '", marriages = "' . $marriages . '", baptisms = "' . $baptisms . '", burials = "' . $burials . '"
             ';
 
-            $this->db->query($sql);
-
-            return (bool)($this->db->affected_rows() > 0);
+            return $this->db->query($sql);
         }
     }

@@ -41,11 +41,11 @@ class Surname_admin extends CI_Model
                    SUM(psd.baptisms) AS baptisms,
                    SUM(psd.marriages) AS marriages,
                    SUM(psd.burials) AS burials
-              FROM DSO_parish_surname AS ps
+              FROM DSO_parish_surname_data AS psd
+        INNER JOIN DSO_parish_surname AS ps ON ps.parish_surname_id = psd.parish_surname_id
         INNER JOIN DSO_surname AS s ON s.surname_id = ps.surname_id
         INNER JOIN DSO_parish AS p ON p.parish_id = ps.parish_id
         INNER JOIN DSO_ward AS w ON w.ward_id = p.ward_id
-         LEFT JOIN DSO_parish_surname_data AS psd ON psd.parish_surname_id = ps.parish_surname_id
         ';
 
         $where_options = array();
@@ -59,7 +59,8 @@ class Surname_admin extends CI_Model
         }
 
         if (!is_null($surname_query) && strlen($surname_query) > 0) {
-            $where_options[] = ' LOWER(s.surname) LIKE ("%' . strtolower($surname_query) . '%") ';
+            $surname_id = $this->get_surname_id($surname_query);
+            $where_options[] = ' ps.surname_id = ' . $surname_id . ' ';
         }
 
         if (count($where_options) > 0) {
@@ -67,7 +68,7 @@ class Surname_admin extends CI_Model
         }
 
         $sql .= '
-            GROUP BY w.ward_id, p.parish_id, s.surname_id
+            GROUP BY ps.parish_surname_id
             ORDER BY w.name, p.name, s.surname ASC
         ';
 
@@ -301,5 +302,20 @@ class Surname_admin extends CI_Model
         $query = $this->db->query($sql);
 
         return (bool)($this->db->affected_rows() > 0);
+    }
+
+    public function get_surname_id($surname)
+    {
+        $sql = '
+            SELECT s.surname_id
+              FROM DSO_surname AS s
+         LEFT JOIN DSO_variant AS v ON v.surname_id = s.surname_id
+             WHERE LOWER(s.surname) = LOWER("' . $surname . '")
+                OR LOWER(v.variant) = LOWER("' . $surname . '")
+        ';
+
+        $query = $this->db->query($sql);
+
+        return (int)$query->row_array()['surname_id'];
     }
 }

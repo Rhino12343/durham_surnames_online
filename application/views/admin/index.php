@@ -119,8 +119,7 @@
         $('#surname_search_btn').on('click', function(e) {
             e.preventDefault();
             var url = window.location.href;
-            url = url.replace(/(sq=).*?(&|$)/, '$1' + search_query + '$2');
-            window.location.replace(url);
+            window.location.replace(updateQueryStringParameter(url, 'sq', search_query));
         });
 
         $('#new_surname_btn').on('click', function(e) {
@@ -138,5 +137,16 @@
             e.preventDefault();
             window.location.replace("<?php echo base_url(); ?>" + 'admin/?ward_id=<?php echo $ward_id; ?>&parish_id=' + $('.parish_filter option:selected').val() + '&sq=' + search_query);
         });
+
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            } else {
+                return uri + separator + key + "=" + value;
+            }
+        }
     })(jQuery);
 </script>

@@ -79,7 +79,7 @@ class Bulk extends CI_Controller {
 
                     while($file_data = fgetcsv($fp))
                     {
-                        if (strtolower($surname) === 'surname'){
+                        if (strtolower($file_data[0]) === 'surname'){
                             continue;
                         }
 
@@ -88,7 +88,9 @@ class Bulk extends CI_Controller {
                         foreach($file_data as $index => $column) {
                             if ($index == 0){
                                 $surname = $column;
-                                $surname_data[$surname] = array();
+                                if (!isset($surname_data[$surname]) || !is_array($surname_data[$surname])) {
+                                    $surname_data[$surname] = array();
+                                }
                             } else {
                                 if (strlen($column) > 0){
                                     if (!in_array($column, $surname_data[$surname]))
@@ -195,11 +197,13 @@ class Bulk extends CI_Controller {
                             $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['marriages'] = $file_data[5];
                             $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['baptisms'] = $file_data[6];
                             $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['burials'] = $file_data[7];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['original_surname'] = $file_data[0];
                         } else {
                             $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['births'] += $file_data[4];
                             $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['marriages'] += $file_data[5];
                             $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['baptisms'] += $file_data[6];
                             $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['burials'] += $file_data[7];
+                            $surname_data[strtolower($file_data[1])][strtolower($file_data[2])][strtolower($surname)][$file_data[3]]['original_surname'] = $file_data[0];
                         }
                     }
 
