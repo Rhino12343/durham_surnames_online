@@ -1,3 +1,7 @@
+.small-12 p, .small-12 h1 {
+    text-align: center;
+}
+
 .bordered {
     border: 1px solid black;
     margin: -10px -10px 0;
@@ -52,23 +56,31 @@
 
 .row #surname_search {
     display: inline-block;
-    width: 90%;
 }
 
 .row .surname_search_label, .row .ward_filter_label, .row .parish_filter_label {
     margin-top: 10px;
 }
 
-.row .fi-magnifying-glass {
-    display: inline-block;
-    margin-left: -15%;
-    font-size: 25px;
-    position: relative;
-    top: 3px;
+#surname_search_btn{
+    width: 100%;
 }
 
-.row .ward_filter, .row .parish_filter {
-    width: 90%;
+.row .input-holder {
+    position: relative;
+}
+.row .fi-magnifying-glass {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 25px;
+    line-height: 39px;
+}
+
+.row .ward_filter, .row .parish_filter {}
+
+.table-scroll {
+    overflow-x: scroll;
 }
 
 .surname_btn_container {
