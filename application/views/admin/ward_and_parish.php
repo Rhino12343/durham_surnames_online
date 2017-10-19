@@ -4,92 +4,61 @@
 <p>Add, edit, and delete Wards &amp; Parishes</p>
 
 <div class="row">
-    <div class="large-6 columns bordered">
-        <div class="row">
-            <div class="large-12 columns">
-                <h3>Ward List</h3>
-            </div>
-        </div>
-        <div class="row">
-            <table class="large-12 columns">
-                <tr class="row">
-                    <th class="large-8 columns">Ward</th>
-                    <th class="large-4 columns">Actions</th>
-                </tr>
-                <?php foreach ($wards as $ward) { ?>
-                    <tr class="row" data-ward_id="<?= $ward['ward_id'] ?>">
-                        <td class="large-8 columns">
-                            <input type="text" class="ward_input" value="<?= $ward['name'] ?>" data-ward_id="<?= $ward['ward_id'] ?>">
-                        </td>
-                        <td class="large-4 columns actions">
-                            <a class="save_ward"><i class="fi-save"></i></a>
-                            <a class="delete_ward"><i class="fi-trash"></i></a>
-                        </td>
-                    </tr>
-                <?php } ?>
-                <tr class="row" id="ward_template" style="display:none">
+    <div class="large-6 columns">
+        <h3>Ward List</h3>
+        <table class="admin_table">
+            <tr class="row">
+                <th class="large-8 columns">Ward</th>
+                <th class="large-4 columns">Actions</th>
+            </tr>
+            <?php foreach ($wards as $ward) { ?>
+                <tr class="row" data-ward_id="<?= $ward['ward_id'] ?>">
                     <td class="large-8 columns">
-                        <input type="text" class="ward_input">
+                        <input type="text" class="ward_input" value="<?= $ward['name'] ?>" data-ward_id="<?= $ward['ward_id'] ?>">
                     </td>
                     <td class="large-4 columns actions">
                         <a class="save_ward"><i class="fi-save"></i></a>
                         <a class="delete_ward"><i class="fi-trash"></i></a>
                     </td>
                 </tr>
-                <tr>&nbsp;</tr>
-                <tr>
-                    <td>
-                        <a class="new_ward">
-                            New ward
-                        </a>
-                    </td>
-                </tr>
-            </table>
-        </div>
+            <?php } ?>
+            <tr class="row" id="ward_template" style="display:none">
+                <td class="large-8 columns">
+                    <input type="text" class="ward_input">
+                </td>
+                <td class="large-4 columns actions">
+                    <a class="save_ward"><i class="fi-save"></i></a>
+                    <a class="delete_ward"><i class="fi-trash"></i></a>
+                </td>
+            </tr>
+            <tr>&nbsp;</tr>
+            <tr>
+                <td>
+                    <a class="new_ward">
+                        New ward
+                    </a>
+                </td>
+            </tr>
+        </table>
     </div>
-    <div class="large-6 columns bordered">
-        <div class="row">
-            <div class="large-12 columns">
-                <h3>Parish List</h3>
-            </div>
-        </div>
-        <div class="row">
-            <table class="large-12 columns">
-                <tr class="row">
-                    <th class="large-4 columns">Parish</th>
-                    <th class="large-4 columns">Ward</th>
-                    <th class="large-4 columns">Actions</th>
-                </tr>
-                <?php foreach ($parishes as $parish) { ?>
-                    <tr class="row" data-parish_id="<?= $parish['parish_id'] ?>">
-                        <td class="large-4 columns">
-                            <input type="text" class="parish_input" value="<?= $parish['name'] ?>" data-parish_id="<?= $parish['parish_id'] ?>">
-                        </td>
-                        <td class="large-4 columns">
-                            <select class="ward_input">
-                                <option>Please Select</option>
-                                <?php foreach ($wards as $ward) { ?>
-                                    <option <?php echo ($parish['ward_id'] == $ward['ward_id'] ? 'selected="selected"' : ''); ?> value="<?= $ward['ward_id'] ?>">
-                                        <?= $ward['name'] ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </td>
-                        <td class="large-4 columns actions">
-                            <a class="save_parish"><i class="fi-save"></i></a>
-                            <a class="delete_parish"><i class="fi-trash"></i></a>
-                        </td>
-                    </tr>
-                <?php } ?>
-                <tr class="row" id='parish_template' style="display:none">
+    <div class="large-6 columns">
+        <h3>Parish List</h3>
+        <table class="admin_table">
+            <tr class="row">
+                <th class="large-4 columns">Parish</th>
+                <th class="large-4 columns">Ward</th>
+                <th class="large-4 columns">Actions</th>
+            </tr>
+            <?php foreach ($parishes as $parish) { ?>
+                <tr class="row" data-parish_id="<?= $parish['parish_id'] ?>">
                     <td class="large-4 columns">
-                        <input type="text" class="parish_input">
+                        <input type="text" class="parish_input" value="<?= $parish['name'] ?>" data-parish_id="<?= $parish['parish_id'] ?>">
                     </td>
                     <td class="large-4 columns">
                         <select class="ward_input">
                             <option>Please Select</option>
                             <?php foreach ($wards as $ward) { ?>
-                                <option value="<?= $ward['ward_id'] ?>">
+                                <option <?php echo ($parish['ward_id'] == $ward['ward_id'] ? 'selected="selected"' : ''); ?> value="<?= $ward['ward_id'] ?>">
                                     <?= $ward['name'] ?>
                                 </option>
                             <?php } ?>
@@ -100,16 +69,35 @@
                         <a class="delete_parish"><i class="fi-trash"></i></a>
                     </td>
                 </tr>
-                <tr>&nbsp;</tr>
-                <tr>
-                    <td>
-                        <a class="new_parish">
-                            New parish
-                        </a>
-                    </td>
-                </tr>
-            </table>
-        </div>
+            <?php } ?>
+            <tr class="row" id='parish_template' style="display:none">
+                <td class="large-4 columns">
+                    <input type="text" class="parish_input">
+                </td>
+                <td class="large-4 columns">
+                    <select class="ward_input">
+                        <option>Please Select</option>
+                        <?php foreach ($wards as $ward) { ?>
+                            <option value="<?= $ward['ward_id'] ?>">
+                                <?= $ward['name'] ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </td>
+                <td class="large-4 columns actions">
+                    <a class="save_parish"><i class="fi-save"></i></a>
+                    <a class="delete_parish"><i class="fi-trash"></i></a>
+                </td>
+            </tr>
+            <tr>&nbsp;</tr>
+            <tr>
+                <td>
+                    <a class="new_parish">
+                        New parish
+                    </a>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 

@@ -1,9 +1,11 @@
-.small-12 p, .small-12 h1 {
-    text-align: center;
+@media screen and (max-width: 40em) {
+    .small-12 p, .small-12 h1 {
+        text-align: center;
+    }
 }
 
 .bordered {
-    border: 1px solid black;
+    border: 0;
     margin: -10px -10px 0;
 }
 
@@ -66,6 +68,11 @@
     width: 100%;
 }
 
+#new_surname_btn{
+    width: 100%;
+    color: #efefef;
+}
+
 .row .input-holder {
     position: relative;
 }
@@ -116,6 +123,19 @@
 
 #surname_display_table {
     width: 100%;
+}
+
+.admin_table {
+    width: 100%;
+}
+
+.surnames_filepath, .surname_data_filepath {
+    line-height: 41px;
+    margin-bottom: 1rem;
+}
+
+.upload_label {
+    float: left;
 }
 
 footer {

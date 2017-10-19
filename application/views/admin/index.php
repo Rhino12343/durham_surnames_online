@@ -1,3 +1,13 @@
+<?php
+    if ($ward_id > 0) {
+        $input_size = 3;
+        $button_size = 3;
+    } else {
+        $input_size = 5;
+        $button_size = 2;
+    }
+?>
+
 <div id="infoMessage"><?php echo $message;?></div>
 
 <h1>Surnames</h1>
@@ -5,22 +15,16 @@
 
 <div id="filter_container">
     <div class="row">
-        <label class="large-2 columns surname_search_label">
-            Surname
-        </label>
-        <div class="large-4 columns">
-            <input type="text" id="surname_search" value="<?= isset($_GET['sq']) ? $_GET['sq'] : '' ?>">
-            <i class="fi-magnifying-glass"></i>
+        <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+            <div class=" input-holder">
+                <input type="text" id="surname_search" placeholder="Surname" value="<?= isset($_GET['sq']) ? $_GET['sq'] : '' ?>">
+                <i class="fi-magnifying-glass"></i>
+            </div>
         </div>
-        <div class="large-6 columns">
-        </div>
-    </div>
 
-    <div class="row">
-        <label class="large-2 columns ward_filter_label">Ward</label>
-        <div class="large-4 columns">
+        <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
             <select class="ward_filter">
-                <option value="">-- Please Select --</option>
+                <option value="">Ward</option>
                 <?php foreach($wards as $ward) { ?>
                     <?php if ($ward_id == $ward['ward_id']) { ?>
                         <option selected="selected" value="<?php echo $ward['ward_id']; ?>"><?php echo $ward['name']; ?></option>
@@ -30,36 +34,27 @@
                 <?php } ?>
             </select>
         </div>
-        <div class="large-6 columns">
-        </div>
-    </div>
 
-    <?php if ($ward_id > 0) { ?>
-        <div class="row">
-            <label class="large-2 columns parish_filter_label">parish</label>
-            <div class="large-4 columns">
-                <select class="parish_filter">
-                    <option value="">-- Please Select --</option>
-                    <?php foreach($parishes as $parish) { ?>
-                        <?php if ($parish_id == $parish['parish_id']) { ?>
-                            <option selected="selected" value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
-                        <?php } else { ?>
-                            <option value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+        <?php if ($ward_id > 0) { ?>
+                <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                    <select class="parish_filter">
+                        <option value="">Parish</option>
+                        <?php foreach($parishes as $parish) { ?>
+                            <?php if ($parish_id == $parish['parish_id']) { ?>
+                                <option selected="selected" value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                            <?php } else { ?>
+                                <option value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                            <?php } ?>
                         <?php } ?>
-                    <?php } ?>
-                </select>
-            </div>
-            <div class="large-6 columns">
-            </div>
-        </div>
-    <?php } ?>
+                    </select>
+                </div>
 
-    <div class="row surname_btn_container">
-            <div class="large-8 columns">&nbsp;</div>
-            <div class="large-4 columns">
-                <input type="button" id="surname_search_btn" value="Search">
-                <input type="button" id="new_surname_btn" value="New Surname">
-            </div>
+        <?php } ?>
+
+        <div class="small-12 medium-6 large-<?= $button_size ?> columns">
+            <input type="button" class="button" id="surname_search_btn" value="Search">
+            <input type="button" class="button success" id="new_surname_btn" value="New Surname">
+        </div>
     </div>
 </div>
 
