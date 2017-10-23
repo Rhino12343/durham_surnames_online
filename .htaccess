@@ -11,3 +11,7 @@ RewriteRule ^(.*)$ index.php/$1
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(application|modules|plugins|system|themes) index.php/$1 [L]
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^example.com [NC]
+RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301,NC]

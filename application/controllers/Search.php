@@ -27,6 +27,8 @@ class Search extends CI_Controller {
         $this->data['ward_id']           = $ward_id;
         $this->data['parish_surname_id'] = $parish_surname_id;
         $this->data['wards']             = $this->search_model->get_wards();
+        $this->data['year_from']         = $year_from;
+        $this->data['year_to']           = $year_to;
         $sq                              = $this->input->get('sq');
 
         if (isset($ward_id) && $ward_id > 0) {
@@ -34,7 +36,7 @@ class Search extends CI_Controller {
             $this->data['parish_id'] = $parish_id;
         }
 
-        $this->data['surnames'] = $this->search_model->get_surnames($ward_id, $parish_id, $sq);
+        $this->data['surnames'] = $this->search_model->get_surnames($ward_id, $parish_id, $sq, $year_from, $year_to);
 
         $this->load->view('search/index', $this->data);
 

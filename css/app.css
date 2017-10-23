@@ -68,6 +68,10 @@
     width: 100%;
 }
 
+#reset_surname_search_btn{
+    width: 100%;
+}
+
 #new_surname_btn{
     width: 100%;
     color: #efefef;

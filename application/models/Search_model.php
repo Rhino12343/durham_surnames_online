@@ -37,7 +37,7 @@
             return $query->result_array();
         }
 
-        public function get_surnames($ward_id = null, $parish_id = null, $surname_query = null) {
+        public function get_surnames($ward_id = null, $parish_id = null, $surname_query = null, $year_from = null , $year_to = null) {
             $sql = '
                 SELECT s.surname AS surname,
                        p.name AS parish,
@@ -71,6 +71,14 @@
                 $where_options[] = ' ps.surname_id = ' . $surname_id . ' ';
             }
 
+            if (!is_null($year_from) && preg_match('/^\d+$/', $year_from)) {
+                $where_options[] = ' psd.year >= ' . $year_from . ' ';
+            }
+
+            if (!is_null($year_to) && preg_match('/^\d+$/', $year_to)) {
+                $where_options[] = ' psd.year <= ' . $year_to . ' ';
+            }
+
             if (count($where_options) > 0) {
                 $sql .= ' WHERE ' . implode(' AND ', $where_options);
             }
@@ -91,8 +99,8 @@
                 SELECT s.surname_id
                   FROM DSO_surname AS s
              LEFT JOIN DSO_variant AS v ON v.surname_id = s.surname_id
-                 WHERE LOWER(s.surname) = LOWER("' . $surname . '")
-                    OR LOWER(v.variant) = LOWER("' . $surname . '")
+                 WHERE LOWER(s.surname) LIKE LOWER("%' . $surname . '%")
+                    OR LOWER(v.variant) LIKE LOWER("%' . $surname . '%")
             ';
 
             $query = $this->db->query($sql);

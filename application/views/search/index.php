@@ -15,44 +15,58 @@
 
 <div id="filter_container">
     <div class="row">
-        <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
-            <div class=" input-holder">
-                <input type="text" id="surname_search" placeholder="Surname" value="<?= isset($_GET['sq']) ? $_GET['sq'] : '' ?>">
-                <i class="fi-magnifying-glass"></i>
-            </div>
-        </div>
-
-        <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
-            <select class="ward_filter">
-                <option value="">Ward</option>
-                <?php foreach($wards as $ward) { ?>
-                    <?php if ($ward_id == $ward['ward_id']) { ?>
-                        <option selected="selected" value="<?php echo $ward['ward_id']; ?>"><?php echo $ward['name']; ?></option>
-                    <?php } else { ?>
-                        <option value="<?php echo $ward['ward_id']; ?>"><?php echo $ward['name']; ?></option>
-                    <?php } ?>
-                <?php } ?>
-            </select>
-        </div>
-
-    <?php if ($ward_id > 0) { ?>
+        <form>
             <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
-                <select class="parish_filter">
-                    <option value="">Parish</option>
-                    <?php foreach($parishes as $parish) { ?>
-                        <?php if ($parish_id == $parish['parish_id']) { ?>
-                            <option selected="selected" value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                <div class=" input-holder">
+                    <input type="text" id="surname_search" placeholder="Surname" value="<?= isset($_GET['sq']) ? $_GET['sq'] : '' ?>">
+                    <i class="fi-magnifying-glass"></i>
+                </div>
+            </div>
+
+            <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                <select class="ward_filter">
+                    <option value="">Ward</option>
+                    <?php foreach($wards as $ward) { ?>
+                        <?php if ($ward_id == $ward['ward_id']) { ?>
+                            <option selected="selected" value="<?php echo $ward['ward_id']; ?>"><?php echo $ward['name']; ?></option>
                         <?php } else { ?>
-                            <option value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                            <option value="<?php echo $ward['ward_id']; ?>"><?php echo $ward['name']; ?></option>
                         <?php } ?>
                     <?php } ?>
                 </select>
             </div>
-    <?php } ?>
 
-        <div class="small-12 medium-6 large-<?= $button_size; ?> columns">
-            <input type="button" class="button" id="surname_search_btn" value="Search">
-        </div>
+        <?php if ($ward_id > 0) { ?>
+                <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                    <select class="parish_filter">
+                        <option value="">Parish</option>
+                        <?php foreach($parishes as $parish) { ?>
+                            <?php if ($parish_id == $parish['parish_id']) { ?>
+                                <option selected="selected" value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                            <?php } else { ?>
+                                <option value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                            <?php } ?>
+                        <?php } ?>
+                    </select>
+                </div>
+        <?php } ?>
+
+            <div class="small-12 medium-6 large-<?= $button_size; ?> columns">
+                <input type="button" class="button" id="surname_search_btn" value="Search">
+            </div>
+
+            <div class="small-12 medium-6 large-5 columns">
+                <input type="number" id="year_from" min="1500" max="1600" placeholder="Year From" value="<?= $year_from; ?>">
+            </div>
+
+            <div class="small-12 medium-6 large-5 columns">
+                <input type="number" id="year_to" min="1500" max="1600" placeholder="Year To" value="<?= $year_to; ?>">
+            </div>
+
+            <div class="small-12 medium-6 large-2 columns">
+                <input type="button" class="button secondary" id="reset_surname_search_btn" value="Reset">
+            </div>
+        </form>
     </div>
 </div>
 
@@ -93,11 +107,57 @@
             search_query = $(this).val();
         });
 
-        $('#surname_search_btn').on('click', function(e) {
+        $('#surname_search_btn').on('click', execute_search);
+
+        $('#surname_search').on('keyup', function(e) {
+            if (e.keyCode == 13) {
+                execute_search(e);
+            }
+        });
+
+        $('#year_from').on('keyup', function(e) {
+            if (e.keyCode == 13) {
+                execute_search(e);
+            }
+        });
+
+        $('.fi-magnifying-glass').on('click', execute_search);
+
+        $('#year_to').on('keyup', function(e) {
+            if (e.keyCode == 13) {
+                execute_search(e);
+            }
+        });
+
+        $('#reset_surname_search_btn').on('click', function(e) {
+            e.preventDefault();
+
+            $('#year_from').val('');
+            $('#year_to').val('');
+            $('#surname_search').val('');
+            $('.ward_filter').find('option:first').attr('selected', 'selected');
+            $('.parish_filter').find('option:first').attr('selected', 'selected');
+            window.location.replace('?');
+        });
+
+        function execute_search(e) {
             e.preventDefault();
             var url = window.location.href;
-            window.location.replace(updateQueryStringParameter(url, 'sq', search_query));
-        });
+
+            if (search_query.length > 0) {
+                url = updateQueryStringParameter(url, 'sq', search_query);
+            }
+
+            if ($('#year_from').val() > 0) {
+                url = updateQueryStringParameter(url, 'year_from', $('#year_from').val());
+            }
+
+            if ($('#year_to').val() > 0) {
+                url = updateQueryStringParameter(url, 'year_to', $('#year_to').val());
+            }
+
+            window.location.replace(url);
+        }
 
         $('.ward_filter').on('change', function(e) {
             e.preventDefault();
