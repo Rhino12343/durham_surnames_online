@@ -64,12 +64,20 @@
     margin-top: 10px;
 }
 
+.admin_btn_container #surname_search_btn {
+    top: 0px;
+}
+
 #surname_search_btn{
     width: 100%;
+    position: relative;
+    top: 24px;
 }
 
 #reset_surname_search_btn{
     width: 100%;
+    position: relative;
+    top: 24px;
 }
 
 #new_surname_btn{
@@ -82,7 +90,7 @@
 }
 .row .fi-magnifying-glass {
     position: absolute;
-    top: 0;
+    top: 24px;
     right: 10px;
     font-size: 25px;
     line-height: 39px;
@@ -140,6 +148,11 @@
 
 .upload_label {
     float: left;
+}
+
+.admin_btn_container {
+    top: 24px;
+    position: relative;
 }
 
 footer {

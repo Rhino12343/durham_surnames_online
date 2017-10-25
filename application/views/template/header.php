@@ -7,7 +7,10 @@
         <link rel="stylesheet" href="<?= base_url(); ?>css/foundation.min.css">
         <link rel="stylesheet" href="<?= base_url(); ?>fonts/foundation-icons.css">
         <link rel="stylesheet" href="<?= base_url(); ?>css/app.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/zf/dt-1.10.16/datatables.min.css"/>
+
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/zf/dt-1.10.16/datatables.min.js"></script>
     </head>
     <body>
         <div class="top-bar">

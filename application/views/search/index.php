@@ -18,12 +18,14 @@
         <form>
             <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
                 <div class=" input-holder">
+                    <span>Surname:</span>
                     <input type="text" id="surname_search" placeholder="Surname" value="<?= isset($_GET['sq']) ? $_GET['sq'] : '' ?>">
                     <i class="fi-magnifying-glass"></i>
                 </div>
             </div>
 
             <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                <span>Ward:</span>
                 <select class="ward_filter">
                     <option value="">Ward</option>
                     <?php foreach($wards as $ward) { ?>
@@ -38,6 +40,7 @@
 
         <?php if ($ward_id > 0) { ?>
                 <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                    <span>Parish:</span>
                     <select class="parish_filter">
                         <option value="">Parish</option>
                         <?php foreach($parishes as $parish) { ?>
@@ -56,10 +59,12 @@
             </div>
 
             <div class="small-12 medium-6 large-5 columns">
+                <span>Year From:</span>
                 <input type="number" id="year_from" min="1500" max="1600" placeholder="Year From" value="<?= $year_from; ?>">
             </div>
 
             <div class="small-12 medium-6 large-5 columns">
+                <span>Year To:</span>
                 <input type="number" id="year_to" min="1500" max="1600" placeholder="Year To" value="<?= $year_to; ?>">
             </div>
 
@@ -101,6 +106,10 @@
 
 <script type="text/javascript">
     (function($){
+        $('#surname_display_table').DataTable({
+            "searching": false
+        });
+
         var search_query = "<?= $this->input->get('sq') ?>";
 
         $('#surname_search').on('input', function(){
