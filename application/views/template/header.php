@@ -38,4 +38,5 @@
                 <h4 class="subheader">An analysis of the historic distribution and incidence of Durham surnames in the sixteenth century.</h4>
             </div>
         </div>
-        <div class="row small-12 medium-10 large-10 columns">
+        <div class="row">
+            <div class="small-12 medium-11 large-11 columns">

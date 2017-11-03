@@ -1,10 +1,8 @@
 <?php
     if ($ward_id > 0) {
-        $input_size = 3;
-        $button_size = 3;
+        $input_size = 4;
     } else {
-        $input_size = 5;
-        $button_size = 2;
+        $input_size = 6;
     }
 ?>
 
@@ -12,9 +10,11 @@
 
 <h1>Surnames</h1>
 <p>Below is a full list of all surnames held</p>
-
-<div id="filter_container">
-    <div class="row">
+<div class="small-6 columns">
+    <img src="<?= base_url() ?>/images/DSO_map.jpg" id='dso_map'>
+</div>
+<div class="small-6 columns">
+    <div id="filter_container">
         <form>
             <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
                 <div class=" input-holder">
@@ -38,76 +38,83 @@
                 </select>
             </div>
 
-        <?php if ($ward_id > 0) { ?>
-                <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
-                    <span>Parish:</span>
-                    <select class="parish_filter">
-                        <option value="">Parish</option>
-                        <?php foreach($parishes as $parish) { ?>
-                            <?php if ($parish_id == $parish['parish_id']) { ?>
-                                <option selected="selected" value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
-                            <?php } else { ?>
-                                <option value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+            <?php if ($ward_id > 0) { ?>
+                    <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                        <span>Parish:</span>
+                        <select class="parish_filter">
+                            <option value="">Parish</option>
+                            <?php foreach($parishes as $parish) { ?>
+                                <?php if ($parish_id == $parish['parish_id']) { ?>
+                                    <option selected="selected" value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                                <?php } else { ?>
+                                    <option value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                                <?php } ?>
                             <?php } ?>
-                        <?php } ?>
-                    </select>
-                </div>
-        <?php } ?>
+                        </select>
+                    </div>
+            <?php } ?>
 
-            <div class="small-12 medium-6 large-<?= $button_size; ?> columns">
-                <input type="button" class="button" id="surname_search_btn" value="Search">
-            </div>
-
-            <div class="small-12 medium-6 large-5 columns">
+            <div class="small-12 medium-6 large-6 columns">
                 <span>Year From:</span>
                 <input type="number" id="year_from" min="1500" max="1600" placeholder="Year From" value="<?= $year_from; ?>">
             </div>
 
-            <div class="small-12 medium-6 large-5 columns">
+            <div class="small-12 medium-6 large-6 columns">
                 <span>Year To:</span>
                 <input type="number" id="year_to" min="1500" max="1600" placeholder="Year To" value="<?= $year_to; ?>">
             </div>
 
-            <div class="small-12 medium-6 large-2 columns">
+            <div class="small-12 medium-6 large-6 columns">
+                <input type="button" class="button" id="surname_search_btn" value="Search">
+            </div>
+            <div class="small-12 medium-6 large-6 columns">
                 <input type="button" class="button secondary" id="reset_surname_search_btn" value="Reset">
             </div>
         </form>
     </div>
-</div>
 
-<div class="table-scroll">
-    <table id="surname_display_table" class="responsive">
-        <thead>
-            <tr>
-                <th>Ward</th>
-                <th>Parish</th>
-                <th>Surname</th>
-                <th>Births</th>
-                <th>Baptisms</th>
-                <th>Marriages</th>
-                <th>Burials</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($surnames as $surname): ?>
+    <div class="table-scroll">
+        <table id="surname_display_table">
+            <thead>
                 <tr>
-                    <td><?php echo $surname['ward'];?></td>
-                    <td><?php echo $surname['parish'];?></td>
-                    <td><?php echo $surname['surname'];?></td>
-                    <td><?php echo (isset($surname['births']) ? $surname['births'] : 0); ?></td>
-                    <td><?php echo (isset($surname['baptisms']) ? $surname['baptisms'] : 0); ?></td>
-                    <td><?php echo (isset($surname['marriages']) ? $surname['marriages'] : 0); ?></td>
-                    <td><?php echo (isset($surname['burials']) ? $surname['burials'] : 0); ?></td>
+                    <th>Ward</th>
+                    <th>Parish</th>
+                    <th>Surname</th>
+                    <th>Births</th>
+                    <th>Baptisms</th>
+                    <th>Marriages</th>
+                    <th>Burials</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($surnames as $surname): ?>
+                    <tr>
+                        <td><?php echo $surname['ward'];?></td>
+                        <td><?php echo $surname['parish'];?></td>
+                        <td><?php echo $surname['surname'];?></td>
+                        <td><?php echo (isset($surname['births']) ? $surname['births'] : 0); ?></td>
+                        <td><?php echo (isset($surname['baptisms']) ? $surname['baptisms'] : 0); ?></td>
+                        <td><?php echo (isset($surname['marriages']) ? $surname['marriages'] : 0); ?></td>
+                        <td><?php echo (isset($surname['burials']) ? $surname['burials'] : 0); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script type="text/javascript">
     (function($){
         $('#surname_display_table').DataTable({
-            "searching": false
+            "searching": false,
+            "pagingType": "simple_numbers",
+            "info": false,
+            "language": {
+                "paginate": {
+                    "previous": "<<",
+                    "next": ">>"
+                }
+            }
         });
 
         var search_query = "<?= $this->input->get('sq') ?>";

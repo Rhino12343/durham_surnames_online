@@ -70,14 +70,10 @@
 
 #surname_search_btn{
     width: 100%;
-    position: relative;
-    top: 24px;
 }
 
 #reset_surname_search_btn{
     width: 100%;
-    position: relative;
-    top: 24px;
 }
 
 #new_surname_btn{
@@ -94,13 +90,10 @@
     right: 10px;
     font-size: 25px;
     line-height: 39px;
+    cursor: pointer;
 }
 
 .row .ward_filter, .row .parish_filter {}
-
-.table-scroll {
-    overflow-x: scroll;
-}
 
 .surname_btn_container {
     padding-bottom: 15px;
@@ -157,4 +150,22 @@
 
 footer {
     min-height: 50px;
+}
+
+.small-6 .small-6 .pagination {
+}
+
+img#dso_map {
+    margin-top: 36%;
+}
+
+div.dataTables_wrapper {
+    z-index: 1;
+    width: 150% !important;
+    position: relative;
+}
+
+div#filter_container {
+    z-index: 2;
+    position: relative;
 }
