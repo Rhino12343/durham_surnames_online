@@ -107,4 +107,22 @@
 
             return (int)$query->row_array()['surname_id'];
         }
+
+        public function get_variants($surname) {
+            $sql = '
+                SELECT v.variant AS variant
+                  FROM DSO_surname AS s
+             LEFT JOIN DSO_variant AS v ON v.surname_id = s.surname_id
+                 WHERE LOWER(s.surname) LIKE LOWER("%' . $surname . '%")
+            ';
+
+            $query = $this->db->query($sql);
+            $variants = array();
+
+            foreach ($query->result_array() as $row) {
+                $variants[] = $row['variant'];
+            }
+
+            return $variants;
+        }
     }

@@ -23,6 +23,15 @@
     margin: 0 5px 0;
 }
 
+#search_variants {
+    border-color: black;
+    border-style: dashed;
+    border-width: 1px;
+    margin-bottom: 10px;
+    height:150px;
+    overflow-y: scroll;
+}
+
 #variants {
     border-color: black;
     border-style: dashed;
@@ -68,15 +77,15 @@
     top: 0px;
 }
 
-#surname_search_btn{
+#surname_search_btn {
     width: 100%;
 }
 
-#reset_surname_search_btn{
+#reset_surname_search_btn {
     width: 100%;
 }
 
-#new_surname_btn{
+#new_surname_btn {
     width: 100%;
     color: #efefef;
 }
@@ -155,9 +164,7 @@ footer {
 .small-6 .small-6 .pagination {
 }
 
-img#dso_map {
-    margin-top: 36%;
-}
+img#dso_map {}
 
 div.dataTables_wrapper {
     z-index: 1;

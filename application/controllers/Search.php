@@ -37,6 +37,14 @@ class Search extends CI_Controller {
         }
 
         $this->data['surnames'] = $this->search_model->get_surnames($ward_id, $parish_id, $sq, $year_from, $year_to);
+        $this->data['variants'] = array();
+
+        foreach ($this->data['surnames'] as $surname_data) {
+            $variants = $this->search_model->get_variants($surname_data['surname']);
+            $this->data['variants'] = array_merge($this->data['variants'], $variants);
+        }
+
+        $this->data['variants'] = array_unique($this->data['variants']);
 
         $this->load->view('search/index', $this->data);
 

@@ -8,9 +8,13 @@
 
 <div id="infoMessage"><?php echo $message;?></div>
 
-<h1>Surnames</h1>
-<p>Below is a full list of all surnames held</p>
+<h1 class="text-center">Surnames</h1>
+<p class="text-center">Below is a full list of all surnames held</p>
 <div class="small-6 columns">
+    Spelling Variants/Deviations Included
+    <div id="search_variants">
+        <?= implode(', ', $variants); ?>
+    </div>
     <img src="<?= base_url() ?>/images/DSO_map.jpg" id='dso_map'>
 </div>
 <div class="small-6 columns">
