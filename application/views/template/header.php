@@ -32,11 +32,11 @@
             </div>
         </div>
 
-        <div class="callout large primary">
+        <div class="callout medium primary">
             <div class="row column text-center">
                 <h1>Durham Surnames Online</h1>
                 <h4 class="subheader">An analysis of the historic distribution and incidence of Durham surnames in the sixteenth century.</h4>
             </div>
         </div>
         <div class="row">
-            <div class="small-12 medium-11 large-11 columns">
+            <div class="small-11 columns">

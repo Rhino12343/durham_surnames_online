@@ -8,75 +8,87 @@
 
 <div id="infoMessage"><?php echo $message;?></div>
 
-<h1 class="text-center">Surnames</h1>
-<p class="text-center">Below is a full list of all surnames held</p>
-<div class="small-6 columns">
-    Spelling Variants/Deviations Included
-    <div id="search_variants">
-        <?= implode(', ', $variants); ?>
+<div class="small-12 columns search_top">
+    <div class="small-8 columns">
+        <img src="<?= base_url() ?>/images/DSO_map.jpg" id='dso_map'>
     </div>
-    <img src="<?= base_url() ?>/images/DSO_map.jpg" id='dso_map'>
-</div>
-<div class="small-6 columns">
-    <div id="filter_container">
-        <form>
-            <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
-                <div class=" input-holder">
-                    <span>Surname:</span>
-                    <input type="text" id="surname_search" placeholder="Surname" value="<?= isset($_GET['sq']) ? $_GET['sq'] : '' ?>">
-                    <i class="fi-magnifying-glass"></i>
-                </div>
-            </div>
 
-            <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
-                <span>Ward:</span>
-                <select class="ward_filter">
-                    <option value="">Ward</option>
-                    <?php foreach($wards as $ward) { ?>
-                        <?php if ($ward_id == $ward['ward_id']) { ?>
-                            <option selected="selected" value="<?php echo $ward['ward_id']; ?>"><?php echo $ward['name']; ?></option>
-                        <?php } else { ?>
-                            <option value="<?php echo $ward['ward_id']; ?>"><?php echo $ward['name']; ?></option>
-                        <?php } ?>
-                    <?php } ?>
-                </select>
-            </div>
+    <div class="small-4 columns">
+        <div class="title_container">
+            <h1 class="text-center">Surnames</h1>
+            <p class="text-center">Search for a surname below to see the distribution of Births*, Baptisms, Marriages and Burials in County Durham in 16th Century</p>
+        </div>
+    </div>
 
-            <?php if ($ward_id > 0) { ?>
-                    <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
-                        <span>Parish:</span>
-                        <select class="parish_filter">
-                            <option value="">Parish</option>
-                            <?php foreach($parishes as $parish) { ?>
-                                <?php if ($parish_id == $parish['parish_id']) { ?>
-                                    <option selected="selected" value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
-                                <?php } else { ?>
-                                    <option value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
-                                <?php } ?>
-                            <?php } ?>
-                        </select>
+    <div class="small-4 columns">
+        <div id="filter_container">
+            <form>
+                <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                    <div class=" input-holder">
+                        <span>Surname:</span>
+                        <input type="text" id="surname_search" placeholder="Surname" value="<?= isset($_GET['sq']) ? $_GET['sq'] : '' ?>">
+                        <i class="fi-magnifying-glass"></i>
                     </div>
-            <?php } ?>
+                </div>
 
-            <div class="small-12 medium-6 large-6 columns">
-                <span>Year From:</span>
-                <input type="number" id="year_from" min="1500" max="1600" placeholder="Year From" value="<?= $year_from; ?>">
-            </div>
+                <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                    <span>Ward:</span>
+                    <select class="ward_filter">
+                        <option value="">Ward</option>
+                        <?php foreach($wards as $ward) { ?>
+                            <?php if ($ward_id == $ward['ward_id']) { ?>
+                                <option selected="selected" value="<?php echo $ward['ward_id']; ?>"><?php echo $ward['name']; ?></option>
+                            <?php } else { ?>
+                                <option value="<?php echo $ward['ward_id']; ?>"><?php echo $ward['name']; ?></option>
+                            <?php } ?>
+                        <?php } ?>
+                    </select>
+                </div>
 
-            <div class="small-12 medium-6 large-6 columns">
-                <span>Year To:</span>
-                <input type="number" id="year_to" min="1500" max="1600" placeholder="Year To" value="<?= $year_to; ?>">
-            </div>
+                <?php if ($ward_id > 0) { ?>
+                        <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                            <span>Parish:</span>
+                            <select class="parish_filter">
+                                <option value="">Parish</option>
+                                <?php foreach($parishes as $parish) { ?>
+                                    <?php if ($parish_id == $parish['parish_id']) { ?>
+                                        <option selected="selected" value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                                    <?php } else { ?>
+                                        <option value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                <?php } ?>
 
-            <div class="small-12 medium-6 large-6 columns">
-                <input type="button" class="button" id="surname_search_btn" value="Search">
-            </div>
-            <div class="small-12 medium-6 large-6 columns">
-                <input type="button" class="button secondary" id="reset_surname_search_btn" value="Reset">
-            </div>
-        </form>
+                <div class="small-12 medium-6 large-6 columns">
+                    <span>Year From:</span>
+                    <input type="number" id="year_from" min="1500" max="1600" placeholder="Year From" value="<?= $year_from; ?>">
+                </div>
+
+                <div class="small-12 medium-6 large-6 columns">
+                    <span>Year To:</span>
+                    <input type="number" id="year_to" min="1500" max="1600" placeholder="Year To" value="<?= $year_to; ?>">
+                </div>
+
+                <div class="small-12 medium-6 large-6 columns">
+                    <input type="button" class="button" id="surname_search_btn" value="Search">
+                </div>
+                <div class="small-12 medium-6 large-6 columns">
+                    <input type="button" class="button secondary" id="reset_surname_search_btn" value="Reset">
+                </div>
+            </form>
+        </div>
     </div>
+    <div class="small-4 columns">
+        Spelling Variants/Deviants Included
+        <div id="search_variants">
+            <?= implode(', ', $variants); ?>
+        </div>
+    </div>
+</div>
 
+<div class="small-12 columns">
     <div class="table-scroll">
         <table id="surname_display_table">
             <thead>
@@ -105,6 +117,12 @@
             </tbody>
         </table>
     </div>
+</div>
+
+<div class="small-12 columns">
+    <p class="full_width">
+        Note: *Although somewhat unorthodox, the categorisation of Births has been used to not only record actual births but to capture and assign birth years to the myriad of individuals mentioned in wills and manorial records prior to commencement of baptismal registers. The assumed years of births are speculative, based on average ages for the period, although in some instances are verifiable according to information found in later (parish) records.
+    </p>
 </div>
 
 <script type="text/javascript">

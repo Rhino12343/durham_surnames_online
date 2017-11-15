@@ -168,11 +168,30 @@ img#dso_map {}
 
 div.dataTables_wrapper {
     z-index: 1;
-    width: 150% !important;
+    width: 125% !important;
     position: relative;
 }
 
 div#filter_container {
     z-index: 2;
     position: relative;
+    width: 500px;
+}
+
+div#search_variants {
+    width: 500px;
+}
+
+div.search_top {
+    padding-bottom: 50px;
+}
+
+div.title_container {
+    width: 500px;
+}
+
+p.full_width {
+    width: 125%;
+    border: 1px solid black;
+    padding: 15px;
 }
