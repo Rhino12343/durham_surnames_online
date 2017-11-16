@@ -34,7 +34,7 @@
 
         <div class="callout medium primary">
             <div class="row column text-center">
-                <h1>Durham Surnames Online</h1>
+                <h1>Durham Surnames</h1>
                 <h4 class="subheader">An analysis of the historic distribution and incidence of Durham surnames in the sixteenth century.</h4>
             </div>
         </div>

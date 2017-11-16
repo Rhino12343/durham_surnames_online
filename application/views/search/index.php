@@ -9,7 +9,7 @@
 <div id="infoMessage"><?php echo $message;?></div>
 
 <div class="small-12 columns search_top">
-    <div class="small-8 columns">
+    <div class="small-8 columns no_padding">
         <img src="<?= base_url() ?>/images/DSO_map.jpg" id='dso_map'>
     </div>
 
@@ -182,9 +182,7 @@
             e.preventDefault();
             var url = window.location.href;
 
-            if (search_query.length > 0) {
-                url = updateQueryStringParameter(url, 'sq', search_query);
-            }
+            url = updateQueryStringParameter(url, 'sq', search_query);
 
             if ($('#year_from').val() > 0) {
                 url = updateQueryStringParameter(url, 'year_from', $('#year_from').val());

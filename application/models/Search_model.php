@@ -67,8 +67,8 @@
             }
 
             if (!is_null($surname_query) && strlen($surname_query) > 0) {
-                $surname_id = $this->get_surname_id($surname_query);
-                $where_options[] = ' ps.surname_id = ' . $surname_id . ' ';
+                $surname_ids = $this->get_surname_ids($surname_query);
+                $where_options[] = ' ps.surname_id IN (' . implode(', ', $surname_ids) . ') ';
             }
 
             if (!is_null($year_from) && preg_match('/^\d+$/', $year_from)) {
@@ -93,7 +93,7 @@
             return $query->result_array();
         }
 
-        public function get_surname_id($surname)
+        public function get_surname_ids($surname)
         {
             $sql = '
                 SELECT s.surname_id
@@ -104,8 +104,13 @@
             ';
 
             $query = $this->db->query($sql);
+            $surname_ids = array();
 
-            return (int)$query->row_array()['surname_id'];
+            foreach ($query->result_array() as $row) {
+                $surname_ids[] = (int)$row['surname_id'];
+            }
+
+            return $surname_ids;
         }
 
         public function get_variants($surname) {
