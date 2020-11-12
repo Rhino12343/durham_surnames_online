@@ -1,0 +1,235 @@
+<?php
+    if ($ward_id > 0) {
+        $input_size = 4;
+    } else {
+        $input_size = 6;
+    }
+
+	//save hit count for Ken
+	if (!isset($_SESSION['views'])) {
+		include_once('/home/dro/public_html/connect_to_db.php');
+		$dbcnx = connect_to_db();
+		$result = mysqli_query($dbcnx, "UPDATE HitCounter SET Hits = Hits + 1 WHERE Page = 'search' ");
+		mysqli_close($dbcnx);
+		$_SESSION['views'] = 1;
+	}
+
+?>
+
+<div id="infoMessage"><?php echo $message;?></div>
+
+<div class="small-12 columns search_top">
+    <div class="small-8 columns no_padding">
+        <img src="<?= base_url() ?>/images/DSO_map.jpg" id='dso_map'>
+    </div>
+
+    <div class="small-4 columns">
+        <div class="title_container">
+            <h1 class="text-center">Surnames</h1>
+            <p class="text-left">Search for a surname below to see the distribution of Births*, Baptisms, Marriages and Burials in County Durham during the Tudor period (1485-1603)</p>
+        </div>
+    </div>
+
+    <div class="small-4 columns">
+        <div id="filter_container">
+            <form>
+                <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                    <div class=" input-holder">
+                        <span>Surname:</span>
+                        <input type="text" id="surname_search" placeholder="Surname" value="<?= isset($_GET['sq']) ? $_GET['sq'] : '' ?>">
+                        <i class="fi-magnifying-glass"></i>
+                    </div>
+                </div>
+
+                <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                    <span>Ward:</span>
+                    <select class="ward_filter">
+                        <option value="">Ward</option>
+                        <?php foreach($wards as $ward) { ?>
+                            <?php if ($ward_id == $ward['ward_id']) { ?>
+                                <option selected="selected" value="<?php echo $ward['ward_id']; ?>"><?php echo $ward['name']; ?></option>
+                            <?php } else { ?>
+                                <option value="<?php echo $ward['ward_id']; ?>"><?php echo $ward['name']; ?></option>
+                            <?php } ?>
+                        <?php } ?>
+                    </select>
+                </div>
+
+                <?php if ($ward_id > 0) { ?>
+                        <div class="small-12 medium-6 large-<?= $input_size; ?> columns">
+                            <span>Parish:</span>
+                            <select class="parish_filter">
+                                <option value="">Parish</option>
+                                <?php foreach($parishes as $parish) { ?>
+                                    <?php if ($parish_id == $parish['parish_id']) { ?>
+                                        <option selected="selected" value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                                    <?php } else { ?>
+                                        <option value="<?php echo $parish['parish_id']; ?>"><?php echo $parish['name']; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                <?php } ?>
+
+                <div class="small-12 medium-6 large-6 columns">
+                    <span>Year From:</span>
+                    <input type="number" id="year_from" min="1500" max="1600" placeholder="Year From" value="<?= $year_from; ?>">
+                </div>
+
+                <div class="small-12 medium-6 large-6 columns">
+                    <span>Year To:</span>
+                    <input type="number" id="year_to" min="1500" max="1600" placeholder="Year To" value="<?= $year_to; ?>">
+                </div>
+
+                <div class="small-12 medium-6 large-6 columns">
+                    <input type="button" class="button" id="surname_search_btn" value="Search">
+                </div>
+                <div class="small-12 medium-6 large-6 columns">
+                    <input type="button" class="button secondary" id="reset_surname_search_btn" value="Reset">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="small-4 columns">
+		<div class="title_container">
+		 	<p class="text-left"><i>Entering a surname automatically displays the generally accepted primary spelling first, followed by associated variant and deviant spellings. The vital event data columns below list the numbers of individuals with variously spelt surnames extracted from official records between 1485 and 1603.
+	 		</i></p>
+	    </div>
+    </div>
+    <div class="small-8 columns no_padding">
+		  Primary Surname:&nbsp;<?= isset($surnames[0]['surname']) ? '<b>'.ucwords($surnames[0]['surname']).'</b>' : '' ?>
+        <br>Spelling Variants/Deviants Included
+        <div id="search_variants">
+            <?= implode(', ', $variants); ?>
+        </div>
+    </div>
+</div>
+
+<div class="small-12 columns">
+		  Primary Surname:&nbsp;<?= isset($surnames[0]['surname']) ? '<b>'.ucwords($surnames[0]['surname']).'</b>' : '' ?>
+    <div class="table-scroll">
+        <table id="surname_display_table">
+            <thead>
+                <tr>
+                    <th>Ward</th>
+                    <th>Parish</th>
+                    <th>Births</th>
+                    <th>Baptisms</th>
+                    <th>Marriages</th>
+                    <th>Burials</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($surnames as $surname): ?>
+                    <tr>
+                        <td><?php echo $surname['ward'];?></td>
+                        <td><?php echo $surname['parish'];?></td>
+                        <td><?php echo (isset($surname['births']) ? $surname['births'] : 0); ?></td>
+                        <td><?php echo (isset($surname['baptisms']) ? $surname['baptisms'] : 0); ?></td>
+                        <td><?php echo (isset($surname['marriages']) ? $surname['marriages'] : 0); ?></td>
+                        <td><?php echo (isset($surname['burials']) ? $surname['burials'] : 0); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="small-12 columns">
+    <p class="full_width">
+        Note: *Although somewhat unorthodox, the categorisation of Births has been used to not only record actual births but to capture and assign birth years to the myriad of individuals mentioned in wills and manorial records prior to commencement of baptismal registers. The assumed years of births are speculative, based on average ages for the period, although in some instances are verifiable according to information found in later (parish) records.
+    </p>
+</div>
+
+<script type="text/javascript">
+    (function($){
+        $('#surname_display_table').DataTable({
+            "searching": false,
+            "pagingType": "simple_numbers",
+            "info": false,
+            "language": {
+                "paginate": {
+                    "previous": "<<",
+                    "next": ">>"
+                }
+            }
+        });
+
+        var search_query = "<?= $this->input->get('sq') ?>";
+
+        $('#surname_search').on('input', function(){
+            search_query = $(this).val();
+        });
+
+        $('#surname_search_btn').on('click', execute_search);
+
+        $('#surname_search').on('keyup', function(e) {
+            if (e.keyCode == 13) {
+                execute_search(e);
+            }
+        });
+
+        $('#year_from').on('keyup', function(e) {
+            if (e.keyCode == 13) {
+                execute_search(e);
+            }
+        });
+
+        $('.fi-magnifying-glass').on('click', execute_search);
+
+        $('#year_to').on('keyup', function(e) {
+            if (e.keyCode == 13) {
+                execute_search(e);
+            }
+        });
+
+        $('#reset_surname_search_btn').on('click', function(e) {
+            e.preventDefault();
+
+            $('#year_from').val('');
+            $('#year_to').val('');
+            $('#surname_search').val('');
+            $('.ward_filter').find('option:first').attr('selected', 'selected');
+            $('.parish_filter').find('option:first').attr('selected', 'selected');
+            window.location.replace('?');
+        });
+
+        function execute_search(e) {
+            e.preventDefault();
+            var url = window.location.href;
+
+            url = updateQueryStringParameter(url, 'sq', search_query);
+
+            if ($('#year_from').val() > 0) {
+                url = updateQueryStringParameter(url, 'year_from', $('#year_from').val());
+            }
+
+            if ($('#year_to').val() > 0) {
+                url = updateQueryStringParameter(url, 'year_to', $('#year_to').val());
+            }
+
+            window.location.replace(url);
+        }
+
+        $('.ward_filter').on('change', function(e) {
+            e.preventDefault();
+            window.location.replace("<?php echo base_url(); ?>" + 'search/?ward_id=' + $('.ward_filter option:selected').val() + '&sq=' + search_query);
+        });
+
+        $('.parish_filter').on('change', function(e) {
+            e.preventDefault();
+            window.location.replace("<?php echo base_url(); ?>" + 'search/?ward_id=<?php echo $ward_id; ?>&parish_id=' + $('.parish_filter option:selected').val() + '&sq=' + search_query);
+        });
+
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            } else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+    })(jQuery);
+</script>
