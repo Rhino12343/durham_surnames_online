@@ -10,7 +10,7 @@ class Surname_admin extends CI_Model
         $surname = ucwords($surname);
 
         $sql = '
-            UPDATE DSO_surname
+            UPDATE surnames_surname
                SET surname = "' . $surname . '"
              WHERE surname_id = ' . $surname_id;
 
@@ -21,7 +21,7 @@ class Surname_admin extends CI_Model
 
     public function delete_variant($variant_id) {
         $sql = '
-            DELETE FROM DSO_variant
+            DELETE FROM surnames_variant
                   WHERE variant_id = ' . $variant_id;
 
         $this->db->query($sql);
@@ -41,11 +41,11 @@ class Surname_admin extends CI_Model
                    SUM(psd.baptisms) AS baptisms,
                    SUM(psd.marriages) AS marriages,
                    SUM(psd.burials) AS burials
-              FROM DSO_parish_surname_data AS psd
-        INNER JOIN DSO_parish_surname AS ps ON ps.parish_surname_id = psd.parish_surname_id
-        INNER JOIN DSO_surname AS s ON s.surname_id = ps.surname_id
-        INNER JOIN DSO_parish AS p ON p.parish_id = ps.parish_id
-        INNER JOIN DSO_ward AS w ON w.ward_id = p.ward_id
+              FROM surnames_parish_surname_data AS psd
+        INNER JOIN surnames_parish_surname AS ps ON ps.parish_surname_id = psd.parish_surname_id
+        INNER JOIN surnames_surname AS s ON s.surname_id = ps.surname_id
+        INNER JOIN surnames_parish AS p ON p.parish_id = ps.parish_id
+        INNER JOIN surnames_ward AS w ON w.ward_id = p.ward_id
         ';
 
         $where_options = array();
@@ -81,8 +81,8 @@ class Surname_admin extends CI_Model
         $sql = '
             SELECT s.surname,
                    s.surname_id
-              FROM DSO_parish_surname AS ps
-        INNER JOIN DSO_surname AS s ON s.surname_id = ps.surname_id
+              FROM surnames_parish_surname AS ps
+        INNER JOIN surnames_surname AS s ON s.surname_id = ps.surname_id
              WHERE ps.parish_surname_id = ' . $parish_surname_id;
 
         $query = $this->db->query($sql);
@@ -94,7 +94,7 @@ class Surname_admin extends CI_Model
         $sql = '
             SELECT variant_id,
                    variant
-              FROM DSO_variant
+              FROM surnames_variant
              WHERE surname_id = ' . $surname_id;
 
         $query = $this->db->query($sql);
@@ -111,9 +111,9 @@ class Surname_admin extends CI_Model
                    psd.marriages,
                    psd.burials,
                    s.surname
-              FROM DSO_parish_surname_data AS psd
-        INNER JOIN DSO_parish_surname AS ps ON ps.parish_surname_id = psd.parish_surname_id
-        INNER JOIN DSO_surname AS s ON s.surname_id = ps.surname_id
+              FROM surnames_parish_surname_data AS psd
+        INNER JOIN surnames_parish_surname AS ps ON ps.parish_surname_id = psd.parish_surname_id
+        INNER JOIN surnames_surname AS s ON s.surname_id = ps.surname_id
              WHERE ps.parish_surname_id = ' . $parish_surname_id;
 
         if (preg_match('/^\d+$/', $year_from) && preg_match('/^\d+$/', $year_to)) {
@@ -128,7 +128,7 @@ class Surname_admin extends CI_Model
     }
 
     public function new_data_row($parish_surname_id) {
-        $sql = 'INSERT INTO DSO_parish_surname_data (parish_surname_id) VALUES (' . $parish_surname_id . ')';
+        $sql = 'INSERT INTO surnames_parish_surname_data (parish_surname_id) VALUES (' . $parish_surname_id . ')';
 
         $this->db->query($sql);
 
@@ -136,7 +136,7 @@ class Surname_admin extends CI_Model
     }
 
     public function new_variant($surname_id) {
-        $sql = 'INSERT INTO DSO_variant(surname_id, variant) VALUES
+        $sql = 'INSERT INTO surnames_variant(surname_id, variant) VALUES
                             (' . $surname_id . ', "")';
 
         $this->db->query($sql);
@@ -148,7 +148,7 @@ class Surname_admin extends CI_Model
         $variant = ucwords($variant);
 
         $sql = '
-            UPDATE DSO_variant
+            UPDATE surnames_variant
                SET variant = "' . $variant . '"
              WHERE variant_id = ' . $variant_id . '
         ';
@@ -160,7 +160,7 @@ class Surname_admin extends CI_Model
 
     public function save_data_row($parish_surname_data_id, $year, $births, $baptisms, $marriages, $burials) {
         $sql = '
-            UPDATE DSO_parish_surname_data
+            UPDATE surnames_parish_surname_data
                SET year = ' . $year . ',
                    births = ' . $births . ',
                    baptisms = ' . $baptisms . ',
@@ -176,7 +176,7 @@ class Surname_admin extends CI_Model
     public function delete_data_row($parish_surname_data_id) {
         $sql = '
             DELETE
-              FROM DSO_parish_surname_data
+              FROM surnames_parish_surname_data
              WHERE parish_surname_data_id = ' . $parish_surname_data_id . '
         ';
 
@@ -189,7 +189,7 @@ class Surname_admin extends CI_Model
         $sql = '
             SELECT ward_id,
                    name
-              FROM DSO_ward
+              FROM surnames_ward
         ';
 
         $query = $this->db->query($sql);
@@ -202,7 +202,7 @@ class Surname_admin extends CI_Model
             SELECT parish_id,
                    ward_id,
                    name
-              FROM DSO_parish
+              FROM surnames_parish
         ';
 
         if (preg_match('/^\d+$/', $ward_id)) {
@@ -217,13 +217,13 @@ class Surname_admin extends CI_Model
     public function save_surname($parish_id, $surname) {
         $surname = ucwords($surname);
 
-        $sql = 'INSERT INTO DSO_surname (surname) VALUES ("' . $surname . '")';
+        $sql = 'INSERT INTO surnames_surname (surname) VALUES ("' . $surname . '")';
 
         $query = $this->db->query($sql);
 
         $surname_id = $this->db->insert_id();
 
-        $sql = 'INSERT INTO DSO_parish_surname (parish_id, surname_id)
+        $sql = 'INSERT INTO surnames_parish_surname (parish_id, surname_id)
                      VALUES ("' . $parish_id . '", "' . $surname_id . '")';
 
         $query = $this->db->query($sql);
@@ -232,12 +232,12 @@ class Surname_admin extends CI_Model
     }
 
     public function delete_surname($parish_surname_id) {
-        $sql = 'DELETE FROM DSO_parish_surname_data
+        $sql = 'DELETE FROM surnames_parish_surname_data
                       WHERE parish_surname_id = ' . $parish_surname_id;
 
         $query = $this->db->query($sql);
 
-        $sql = 'DELETE FROM DSO_parish_surname
+        $sql = 'DELETE FROM surnames_parish_surname
                       WHERE parish_surname_id = ' . $parish_surname_id;
 
         $query = $this->db->query($sql);
@@ -246,7 +246,7 @@ class Surname_admin extends CI_Model
     }
 
     public function new_ward() {
-        $sql = 'INSERT INTO DSO_ward (name) VALUES ("")';
+        $sql = 'INSERT INTO surnames_ward (name) VALUES ("")';
 
         $query = $this->db->query($sql);
 
@@ -256,7 +256,7 @@ class Surname_admin extends CI_Model
     public function save_ward($ward_id, $ward) {
         $ward = ucwords($ward);
 
-        $sql = 'UPDATE DSO_ward
+        $sql = 'UPDATE surnames_ward
                    SET name = "' . $ward . '"
                  WHERE ward_id = ' . $ward_id;
 
@@ -266,7 +266,7 @@ class Surname_admin extends CI_Model
     }
 
     public function delete_ward($ward_id) {
-        $sql = 'DELETE FROM DSO_ward
+        $sql = 'DELETE FROM surnames_ward
                       WHERE ward_id = ' . $ward_id;
 
         $query = $this->db->query($sql);
@@ -275,7 +275,7 @@ class Surname_admin extends CI_Model
     }
 
     public function new_parish() {
-        $sql = 'INSERT INTO DSO_parish (name) VALUES ("")';
+        $sql = 'INSERT INTO surnames_parish (name) VALUES ("")';
 
         $query = $this->db->query($sql);
 
@@ -285,7 +285,7 @@ class Surname_admin extends CI_Model
     public function save_parish($ward_id, $parish_id, $parish) {
         $parish = ucwords($parish);
 
-        $sql = 'UPDATE DSO_parish
+        $sql = 'UPDATE surnames_parish
                    SET name = "' . $parish . '",
                        ward_id = ' . $ward_id . '
                  WHERE parish_id = ' . $parish_id;
@@ -296,7 +296,7 @@ class Surname_admin extends CI_Model
     }
 
     public function delete_parish($parish_id) {
-        $sql = 'DELETE FROM DSO_parish
+        $sql = 'DELETE FROM surnames_parish
                       WHERE parish_id = ' . $parish_id;
 
         $query = $this->db->query($sql);
@@ -308,8 +308,8 @@ class Surname_admin extends CI_Model
     {
         $sql = '
             SELECT s.surname_id
-              FROM DSO_surname AS s
-         LEFT JOIN DSO_variant AS v ON v.surname_id = s.surname_id
+              FROM surnames_surname AS s
+         LEFT JOIN surnames_variant AS v ON v.surname_id = s.surname_id
              WHERE LOWER(s.surname) = LOWER("' . $surname . '")
                 OR LOWER(v.variant) = LOWER("' . $surname . '")
         ';

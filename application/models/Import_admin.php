@@ -12,8 +12,8 @@
         {
             $sql = '
                 SELECT s.surname_id
-                  FROM DSO_surname AS s
-             LEFT JOIN DSO_variant AS v ON v.surname_id = s.surname_id
+                  FROM surnames_surname AS s
+             LEFT JOIN surnames_variant AS v ON v.surname_id = s.surname_id
                  WHERE LOWER(s.surname) = LOWER("' . $surname . '")
                     OR LOWER(v.variant) = LOWER("' . $surname . '")
             ';
@@ -27,8 +27,8 @@
         {
             $sql = '
                 SELECT s.surname
-                  FROM DSO_surname AS s
-             LEFT JOIN DSO_variant AS v ON v.surname_id = s.surname_id
+                  FROM surnames_surname AS s
+             LEFT JOIN surnames_variant AS v ON v.surname_id = s.surname_id
                  WHERE LOWER(s.surname) = LOWER("' . $variant . '")
                     OR LOWER(v.variant) = LOWER("' . $variant . '")
             ';
@@ -49,7 +49,7 @@
             $surname = ucwords($surname);
 
             $sql = '
-                INSERT INTO DSO_surname (surname) VALUES ("' . $surname . '")
+                INSERT INTO surnames_surname (surname) VALUES ("' . $surname . '")
             ';
 
             $this->db->query($sql);
@@ -61,7 +61,7 @@
         {
             $sql = '
                 SELECT COUNT(*) AS count
-                  FROM DSO_variant
+                  FROM surnames_variant
                  WHERE surname_id = ' . $surname_id . '
                    AND variant = "' . $variant . '"
             ';
@@ -76,7 +76,7 @@
             $variant = ucwords($variant);
 
             $sql = '
-                INSERT INTO DSO_variant(surname_id, variant) VALUES
+                INSERT INTO surnames_variant(surname_id, variant) VALUES
                             (' . $surname_id . ', "' . $variant . '")
             ';
 
@@ -87,7 +87,7 @@
         {
             $sql = '
                 SELECT ward_id
-                  FROM DSO_ward
+                  FROM surnames_ward
                  WHERE LOWER(name) = LOWER("' . $ward . '")
             ';
 
@@ -100,7 +100,7 @@
             $ward = ucwords($ward);
 
             $sql = '
-                INSERT INTO DSO_ward (name) VALUES
+                INSERT INTO surnames_ward (name) VALUES
                                      ("' . $ward . '")
             ';
 
@@ -113,7 +113,7 @@
         {
             $sql = '
                 SELECT parish_id
-                  FROM DSO_parish
+                  FROM surnames_parish
                  WHERE LOWER(name) = LOWER("' . $parish . '")
                    AND ward_id = ' . $ward_id . '
             ';
@@ -128,7 +128,7 @@
             $parish = ucwords($parish);
 
             $sql = '
-                INSERT INTO DSO_parish (name, ward_id) VALUES
+                INSERT INTO surnames_parish (name, ward_id) VALUES
                                        ("' . $parish . '", ' . $ward_id . ')
             ';
 
@@ -141,7 +141,7 @@
         {
             $sql = '
                 SELECT parish_surname_id
-                  FROM DSO_parish_surname
+                  FROM surnames_parish_surname
                  WHERE parish_id = ' . $parish_id . '
                    AND surname_id = ' . $surname_id . '
             ';
@@ -154,7 +154,7 @@
         public function assign_surname($surname_id, $parish_id)
         {
             $sql = '
-                INSERT INTO DSO_parish_surname (parish_id, surname_id) VALUES
+                INSERT INTO surnames_parish_surname (parish_id, surname_id) VALUES
                                                ('. $parish_id . ', ' . $surname_id .')
             ';
 
@@ -166,7 +166,7 @@
         public function save_surname_data($parish_surname_id, $year, $births, $marriages, $baptisms, $burials)
         {
             $sql = '
-                INSERT INTO DSO_parish_surname_data (parish_surname_id, year, births, marriages, baptisms, burials) VALUES
+                INSERT INTO surnames_parish_surname_data (parish_surname_id, year, births, marriages, baptisms, burials) VALUES
                                                     ("' . $parish_surname_id . '", "' . $year . '", "' . $births . '", "' . $marriages . '", "' . $baptisms . '", "' . $burials . '")
                             ON DUPLICATE KEY UPDATE births = "' . $births . '", marriages = "' . $marriages . '", baptisms = "' . $baptisms . '", burials = "' . $burials . '"
             ';

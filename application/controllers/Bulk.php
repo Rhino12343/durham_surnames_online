@@ -215,8 +215,8 @@ class Bulk extends CI_Controller {
                     // loop over surnames from parish and get surname_id
                     // check if surname_id is associated with parish_id and ward_id
                     // if not assign and return parish_surname_id
-                    // use parish_surname_id and check if year is stored in DSO_parish_surname_data
-                    // add the year to DSO_parish_surname_data
+                    // use parish_surname_id and check if year is stored in surnames_parish_surname_data
+                    // add the year to surnames_parish_surname_data
 
                     foreach ($surname_data as $ward => $parishes){
                         $ward_id = $this->import_admin->get_ward_id($ward);

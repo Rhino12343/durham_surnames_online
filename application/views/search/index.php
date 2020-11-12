@@ -4,6 +4,16 @@
     } else {
         $input_size = 6;
     }
+
+	//save hit count for Ken
+	if (!isset($_SESSION['views'])) {
+		include_once('/home/dro/public_html/connect_to_db.php');
+		$dbcnx = connect_to_db();
+		$result = mysqli_query($dbcnx, "UPDATE HitCounter SET Hits = Hits + 1 WHERE Page = 'search' ");
+		mysqli_close($dbcnx);
+		$_SESSION['views'] = 1;
+	}
+
 ?>
 
 <div id="infoMessage"><?php echo $message;?></div>
@@ -16,7 +26,7 @@
     <div class="small-4 columns">
         <div class="title_container">
             <h1 class="text-center">Surnames</h1>
-            <p class="text-center">Search for a surname below to see the distribution of Births*, Baptisms, Marriages and Burials in County Durham in 16th Century</p>
+            <p class="text-left">Search for a surname below to see the distribution of Births*, Baptisms, Marriages and Burials in County Durham during the Tudor period (1485-1603)</p>
         </div>
     </div>
 
@@ -81,7 +91,14 @@
         </div>
     </div>
     <div class="small-4 columns">
-        Spelling Variants/Deviants Included
+		<div class="title_container">
+		 	<p class="text-left"><i>Entering a surname automatically displays the generally accepted primary spelling first, followed by associated variant and deviant spellings. The vital event data columns below list the numbers of individuals with variously spelt surnames extracted from official records between 1485 and 1603.
+	 		</i></p>
+	    </div>
+    </div>
+    <div class="small-8 columns no_padding">
+		  Primary Surname:&nbsp;<?= isset($surnames[0]['surname']) ? '<b>'.ucwords($surnames[0]['surname']).'</b>' : '' ?>
+        <br>Spelling Variants/Deviants Included
         <div id="search_variants">
             <?= implode(', ', $variants); ?>
         </div>
@@ -89,13 +106,13 @@
 </div>
 
 <div class="small-12 columns">
+		  Primary Surname:&nbsp;<?= isset($surnames[0]['surname']) ? '<b>'.ucwords($surnames[0]['surname']).'</b>' : '' ?>
     <div class="table-scroll">
         <table id="surname_display_table">
             <thead>
                 <tr>
                     <th>Ward</th>
                     <th>Parish</th>
-                    <th>Surname</th>
                     <th>Births</th>
                     <th>Baptisms</th>
                     <th>Marriages</th>
@@ -107,7 +124,6 @@
                     <tr>
                         <td><?php echo $surname['ward'];?></td>
                         <td><?php echo $surname['parish'];?></td>
-                        <td><?php echo $surname['surname'];?></td>
                         <td><?php echo (isset($surname['births']) ? $surname['births'] : 0); ?></td>
                         <td><?php echo (isset($surname['baptisms']) ? $surname['baptisms'] : 0); ?></td>
                         <td><?php echo (isset($surname['marriages']) ? $surname['marriages'] : 0); ?></td>
@@ -124,6 +140,9 @@
         Note: *Although somewhat unorthodox, the categorisation of Births has been used to not only record actual births but to capture and assign birth years to the myriad of individuals mentioned in wills and manorial records prior to commencement of baptismal registers. The assumed years of births are speculative, based on average ages for the period, although in some instances are verifiable according to information found in later (parish) records.
     </p>
 </div>
+<p>
+Please email <a href="mailto:ken@durhamrecordsonline.com">Ken Coleman</a> if you have any questions or comments about this project.
+</p>
 
 <script type="text/javascript">
     (function($){

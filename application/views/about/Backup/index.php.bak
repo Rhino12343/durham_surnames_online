@@ -1,0 +1,49 @@
+<div id="infoMessage"><?php echo $message;?></div>
+
+<?php // echo file_get_contents('http://loripsum.net/api/5'); ?>
+
+<h4>About the Project</h4>
+
+<p>
+   Since 2004, Ken Coleman of Durham Records Online, with his particular interest in the Tudor period, has been transcribing parish registers of baptisms, marriages and burials, working on the earliest registers mainly from a collection of manuscripts bequeathed to Newcastle Library by the genealogist, Herbert Maxwell Wood. This interest prompted a major research project, known as the Durnam (Durham Surnames) project, to be undertaken in 2014. The aim was to gather information, study and analyse the geographic and historic distribution of surnames, and learn more about the historical demography of what is now called County Durham, in the sixteenth century.
+
+</p>
+
+<p>
+    Unfortunately, many of the records normally useful in similar studies of the early Tudor period in areas further south, do not exist in the North East. The musters of 1522 do not survive for the northern counties; the lay subsidies of 1524-25 and 1543-45 excluded Durham, as well as Northumberland. Chantry certificates for Durham exist for 1546 and 1548, many of which provide numbers of "houseling people" (communicants), but not every parish had a chantry (a fund for a priest to sing masses for the deceased). Durham diocese did have a return to the 1563 ecclesiastical census quantifying households in each parish; although four parishes are without numbers. The bishops' returns were intended to survey religious nonconformity and estimate the number of communicants in each parish. Academics over the years envisaged that from the two sources created by different sets of people (the chantry certificates by royal commissioners; the diocesan returns by episcopal officials) they could derive estimates of population. A summary extraction from various academic studies appear in a statistics section.
+</p>
+
+<p>
+    The project study considers the 1550s since they constitute a period of demographic crisis beginning with the two worst harvests of the entire sixteenth century in 1554 and 1555 and continuing with an epidemic of influenza and typhus between 1556 and 1560 which is generally regarded as the greatest decline in population to afflict England since the Black Death two centuries earlier.
+</p>
+
+<p>
+    Only four Durham parish registers begin in the period 1538-43 (Durham St Nicholas, Durham St Oswald, Egglescliffe and Escombe) but they have substantial gaps in the 1550's. All the other Durham registers begin in the late 1550's or later. Some early registers such as those in the ancient parish of Monkwearmouth St Peter and Tanfield St Margaret have been lost, although some efforts have been made to try and reconstruct them as far as is possible.
+</p>
+
+<p>
+    Whilst trawling through early parish records, it soon became apparent how spellings of surnames varied widely between the registers of the various Durham parishes. Although one would expect curates to be literate, some were not. Very often they were not from the parish and would not be familiar with the spelling of some surnames. Also, names may have been spelt differently if they had moved from one curacy to another. In the 16th century (and later) the majority of the inhabitants were illiterate, so spellings were largely down to the literacy or imagination of a curate or clerk.
+    
+    It became clear that there was merit in putting the collected data on a statistical basis, in other words, quantifying the examples of each version of the surname, and it was reasoned that analysing the frequency may be helpful in distinguishing the genuine variants from those fleeting versions arising from simple errors.
+
+</p>
+
+<p>
+    The creation of a separate database integrated within the website was a natural progression, mainly because it facilitates ongoing research work, enables quick updates and, perhaps more importantly, it also provides the means for researchers of their Durham ancestry to identify parishes and years of vital events, and then go onto the main Search Service section of this website to obtain further information about individuals.
+</p>
+
+<p>
+    The principal source of database records is some 60,000 entries of baptisms, marriages and burials, between 1538-1599, in surviving 16th century registers of fifty seven parish churches in the diocese of Durham. Other valuable sources which are a work in progress include the collection of Halmote Court books (Manorial records), commencing in 1519; Wills and Probate from 1537; Calenders of Patent Rolls (Pardons for Rising in the North in 1569), Homberston's Survey of 1570, and various Quarter Sessions, Bishop's administrative records and periodic official surveys.
+</p>
+<p>
+    As a means of capturing the myriad of surnames recorded in pre-parish registers, their inclusion within the 'Births' category of vital events was conceived. If, for example, an individual is recorded in a manorial document in the 1490's  he will be identified as a 'birth' in 1485. 
+</p>
+<p>
+    In all instances, surnames have been transcribed as they appear in the records, even when it is believed the clerk made a mistake. No attempt has been made to normalise surnames because of the danger of making false assumptions. However, a concerted effort has been made to determine the primary name - being the most commonly used and generally accepted, and associated variant and deviant spellings have been linked so that they display also. Decisions on variant spellings are based on earlier studies of surnames, and considerable involvement with parish registers and seventeenth century returns has been made without the luxury of acquiring genealogical evidence by tracing any particular family line back. In this regard, we apologize for any errors and inconsistencies, and welcome viewpoints and constructive criticism.
+</p>
+<p>
+    Research work and data uploading is ongoing and, as the database grows steadily, it is hoped that it will develop beyond merely a platform for discovering surnames and their variants, but within the website emerge as the pre-eminent online source of information on Durham inhabitants during Tudor times. If successful, it may even pave the way for seventeenth century data to be presented in the same way.
+</p>
+<p>
+Please email <a href="mailto:ken@durhamrecordsonline.com">Ken Coleman</a> if you have any questions or comments about this project.
+</p>
