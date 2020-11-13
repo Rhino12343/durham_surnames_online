@@ -10,6 +10,8 @@ services:
       CI_ENV: development
   db:
     image: mariadb
+    ports:
+      - "3306:3306"
     environment: 
       MYSQL_DATABASE: dro_surnames
       MYSQL_USER: dro_dro
