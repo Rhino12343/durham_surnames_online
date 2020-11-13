@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  web:
+    build: ./
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html/
+    environment:
+      CI_ENV: development
+  db:
+    image: mariadb
+    ports:
+      - "3306:3306"
+    environment: 
+      MYSQL_DATABASE: dro_surnames
+      MYSQL_USER: dro_dro
+      MYSQL_PASSWORD: muk77luk
+      MYSQL_ROOT_PASSWORD: Password1

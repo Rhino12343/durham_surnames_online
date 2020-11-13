@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `DSO_groups`
+-- Table structure for table `surnames_groups`
 --
 
-CREATE TABLE IF NOT EXISTS `DSO_groups` (
+CREATE TABLE IF NOT EXISTS `surnames_groups` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `description` varchar(100) NOT NULL,
@@ -34,20 +34,20 @@ CREATE TABLE IF NOT EXISTS `DSO_groups` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `DSO_groups`
+-- Dumping data for table `surnames_groups`
 --
 
-INSERT INTO `DSO_groups` (`id`, `name`, `description`) VALUES
+INSERT INTO `surnames_groups` (`id`, `name`, `description`) VALUES
 (1, 'admin', 'Administrator'),
 (2, 'members', 'General User');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `DSO_login_attempts`
+-- Table structure for table `surnames_login_attempts`
 --
 
-CREATE TABLE IF NOT EXISTS `DSO_login_attempts` (
+CREATE TABLE IF NOT EXISTS `surnames_login_attempts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip_address` varchar(15) NOT NULL,
   `login` varchar(100) NOT NULL,
@@ -58,10 +58,10 @@ CREATE TABLE IF NOT EXISTS `DSO_login_attempts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `DSO_parish`
+-- Table structure for table `surnames_parish`
 --
 
-CREATE TABLE IF NOT EXISTS `DSO_parish` (
+CREATE TABLE IF NOT EXISTS `surnames_parish` (
   `parish_id` int(12) unsigned NOT NULL AUTO_INCREMENT,
   `ward_id` int(12) unsigned NOT NULL,
   `name` char(255) COLLATE latin1_german2_ci NOT NULL,
@@ -73,10 +73,10 @@ CREATE TABLE IF NOT EXISTS `DSO_parish` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=187 ;
 
 --
--- Dumping data for table `DSO_parish`
+-- Dumping data for table `surnames_parish`
 --
 
-INSERT INTO `DSO_parish` (`parish_id`, `ward_id`, `name`, `description`) VALUES
+INSERT INTO `surnames_parish` (`parish_id`, `ward_id`, `name`, `description`) VALUES
 (1, 2, 'Chester Le Street', NULL),
 (2, 2, 'Gateshead', NULL),
 (3, 2, 'Ryton', NULL),
@@ -267,10 +267,10 @@ INSERT INTO `DSO_parish` (`parish_id`, `ward_id`, `name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `DSO_parish_surname`
+-- Table structure for table `surnames_parish_surname`
 --
 
-CREATE TABLE IF NOT EXISTS `DSO_parish_surname` (
+CREATE TABLE IF NOT EXISTS `surnames_parish_surname` (
   `parish_surname_id` int(12) unsigned NOT NULL AUTO_INCREMENT,
   `parish_id` int(12) unsigned NOT NULL,
   `surname_id` int(12) unsigned NOT NULL,
@@ -280,10 +280,10 @@ CREATE TABLE IF NOT EXISTS `DSO_parish_surname` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=6261 ;
 
 --
--- Dumping data for table `DSO_parish_surname`
+-- Dumping data for table `surnames_parish_surname`
 --
 
-INSERT INTO `DSO_parish_surname` (`parish_surname_id`, `parish_id`, `surname_id`) VALUES
+INSERT INTO `surnames_parish_surname` (`parish_surname_id`, `parish_id`, `surname_id`) VALUES
 (1, 1, 4),
 (2, 1, 72),
 (3, 1, 100),
@@ -3786,7 +3786,7 @@ INSERT INTO `DSO_parish_surname` (`parish_surname_id`, `parish_id`, `surname_id`
 (3500, 6, 831),
 (3501, 6, 834),
 (3502, 6, 842);
-INSERT INTO `DSO_parish_surname` (`parish_surname_id`, `parish_id`, `surname_id`) VALUES
+INSERT INTO `surnames_parish_surname` (`parish_surname_id`, `parish_id`, `surname_id`) VALUES
 (3503, 6, 855),
 (3504, 6, 865),
 (3505, 6, 866),
@@ -6549,10 +6549,10 @@ INSERT INTO `DSO_parish_surname` (`parish_surname_id`, `parish_id`, `surname_id`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `DSO_parish_surname_data`
+-- Table structure for table `surnames_parish_surname_data`
 --
 
-CREATE TABLE IF NOT EXISTS `DSO_parish_surname_data` (
+CREATE TABLE IF NOT EXISTS `surnames_parish_surname_data` (
   `parish_surname_data_id` int(12) unsigned NOT NULL AUTO_INCREMENT,
   `parish_surname_id` int(12) unsigned NOT NULL,
   `year` int(4) unsigned NOT NULL DEFAULT '0',
@@ -6567,10 +6567,10 @@ CREATE TABLE IF NOT EXISTS `DSO_parish_surname_data` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=20673 ;
 
 --
--- Dumping data for table `DSO_parish_surname_data`
+-- Dumping data for table `surnames_parish_surname_data`
 --
 
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (1, 1, 1586, 0, 1, 0, 0),
 (2, 2, 1591, 0, 0, 0, 1),
 (3, 3, 1590, 0, 0, 0, 1),
@@ -8340,7 +8340,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (1767, 507, 1579, 0, 2, 0, 1),
 (1768, 507, 1582, 0, 1, 0, 0),
 (1769, 507, 1584, 0, 1, 0, 0);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (1770, 507, 1585, 0, 1, 0, 0),
 (1771, 507, 1587, 0, 1, 0, 0),
 (1772, 507, 1588, 0, 0, 0, 2),
@@ -10052,7 +10052,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (3479, 1075, 1598, 0, 1, 0, 0),
 (3480, 1076, 1584, 0, 0, 0, 1),
 (3481, 1076, 1585, 0, 0, 0, 1);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (3482, 1076, 1591, 0, 0, 0, 1),
 (3483, 1076, 1592, 0, 0, 0, 1),
 (3484, 1077, 1591, 0, 0, 0, 1),
@@ -11714,7 +11714,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (5140, 1575, 1566, 0, 0, 0, 1),
 (5141, 1575, 1568, 0, 1, 0, 0),
 (5142, 1575, 1577, 0, 0, 1, 0);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (5143, 1575, 1578, 0, 0, 1, 0),
 (5144, 1575, 1581, 0, 1, 0, 0),
 (5145, 1575, 1587, 0, 1, 0, 0),
@@ -13376,7 +13376,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (6801, 2068, 1584, 0, 1, 0, 0),
 (6802, 2069, 1577, 0, 0, 1, 0),
 (6803, 2070, 1585, 0, 2, 0, 1);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (6804, 2071, 1564, 0, 0, 0, 1),
 (6805, 2072, 1575, 0, 1, 0, 1),
 (6806, 2073, 1567, 0, 0, 0, 1),
@@ -15038,7 +15038,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (8462, 2612, 1591, 0, 0, 1, 0),
 (8463, 2613, 1572, 0, 1, 0, 0),
 (8464, 2614, 1579, 0, 1, 0, 0);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (8465, 2614, 1582, 0, 1, 0, 0),
 (8466, 2614, 1584, 0, 1, 0, 0),
 (8467, 2614, 1588, 0, 0, 0, 1),
@@ -16696,7 +16696,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (10119, 3078, 1564, 0, 0, 0, 1),
 (10120, 3078, 1566, 0, 0, 0, 1),
 (10121, 3078, 1583, 0, 0, 0, 1);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (10122, 3078, 1599, 0, 1, 0, 0),
 (10123, 3079, 1567, 0, 0, 0, 1),
 (10124, 3079, 1569, 0, 1, 0, 0),
@@ -18305,7 +18305,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (11727, 3524, 1577, 0, 1, 0, 0),
 (11728, 3524, 1580, 0, 1, 0, 0),
 (11729, 3524, 1582, 0, 1, 0, 0);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (11730, 3524, 1588, 0, 1, 0, 0),
 (11731, 3524, 1591, 0, 0, 0, 1),
 (11732, 3525, 1574, 0, 1, 0, 0),
@@ -19914,7 +19914,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (13335, 4045, 1583, 0, 0, 1, 0),
 (13336, 4046, 1572, 0, 1, 0, 2),
 (13337, 4046, 1573, 0, 0, 0, 1);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (13338, 4046, 1579, 0, 0, 1, 0),
 (13339, 4046, 1580, 0, 1, 0, 1),
 (13340, 4046, 1583, 0, 1, 0, 0),
@@ -21523,7 +21523,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (14943, 4510, 1591, 0, 2, 0, 0),
 (14944, 4510, 1592, 0, 1, 0, 1),
 (14945, 4510, 1594, 0, 2, 0, 2);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (14946, 4510, 1597, 0, 0, 0, 1),
 (14947, 4510, 1560, 0, 1, 0, 0),
 (14948, 4510, 1563, 0, 1, 0, 0),
@@ -23149,7 +23149,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (16568, 5087, 1543, 0, 1, 0, 0),
 (16569, 5087, 1546, 0, 0, 0, 1),
 (16570, 5087, 1588, 0, 0, 0, 1);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (16571, 5087, 1591, 0, 0, 1, 0),
 (16572, 5087, 1598, 0, 0, 1, 0),
 (16573, 5087, 1556, 0, 0, 1, 0),
@@ -24758,7 +24758,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (18176, 5551, 1563, 0, 0, 1, 0),
 (18177, 5551, 1564, 0, 0, 1, 0),
 (18178, 5552, 1587, 0, 1, 0, 0);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (18179, 5552, 1588, 0, 1, 0, 0),
 (18180, 5552, 1589, 0, 1, 0, 0),
 (18181, 5552, 1590, 0, 1, 0, 0),
@@ -26369,7 +26369,7 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 (19786, 6010, 1562, 0, 0, 1, 0),
 (19787, 6010, 1563, 0, 1, 0, 0),
 (19788, 6010, 1564, 0, 1, 0, 0);
-INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
+INSERT INTO `surnames_parish_surname_data` (`parish_surname_data_id`, `parish_surname_id`, `year`, `births`, `baptisms`, `marriages`, `burials`) VALUES
 (19789, 6010, 1566, 0, 2, 0, 0),
 (19790, 6010, 1570, 0, 0, 0, 1),
 (19791, 6010, 1574, 0, 0, 0, 3),
@@ -27258,10 +27258,10 @@ INSERT INTO `DSO_parish_surname_data` (`parish_surname_data_id`, `parish_surname
 -- --------------------------------------------------------
 
 --
--- Table structure for table `DSO_surname`
+-- Table structure for table `surnames_surname`
 --
 
-CREATE TABLE IF NOT EXISTS `DSO_surname` (
+CREATE TABLE IF NOT EXISTS `surnames_surname` (
   `surname_id` int(12) unsigned NOT NULL AUTO_INCREMENT,
   `surname` char(255) COLLATE latin1_german2_ci NOT NULL,
   PRIMARY KEY (`surname_id`),
@@ -27269,10 +27269,10 @@ CREATE TABLE IF NOT EXISTS `DSO_surname` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=1465 ;
 
 --
--- Dumping data for table `DSO_surname`
+-- Dumping data for table `surnames_surname`
 --
 
-INSERT INTO `DSO_surname` (`surname_id`, `surname`) VALUES
+INSERT INTO `surnames_surname` (`surname_id`, `surname`) VALUES
 (1, 'Abraham'),
 (2, 'Ackborne'),
 (3, 'Acroyd'),
@@ -28741,10 +28741,10 @@ INSERT INTO `DSO_surname` (`surname_id`, `surname`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `DSO_users`
+-- Table structure for table `surnames_users`
 --
 
-CREATE TABLE IF NOT EXISTS `DSO_users` (
+CREATE TABLE IF NOT EXISTS `surnames_users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip_address` varchar(15) NOT NULL,
   `username` varchar(100) DEFAULT NULL,
@@ -28766,20 +28766,20 @@ CREATE TABLE IF NOT EXISTS `DSO_users` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Dumping data for table `DSO_users`
+-- Dumping data for table `surnames_users`
 --
 
-INSERT INTO `DSO_users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
+INSERT INTO `surnames_users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
 (1, '127.0.0.1', 'administrator', '$2y$08$9T2QTrrmSlwzd33RhAI6KeZweu2EVLPefVB6Bt5pxvZ35iTdV1tPK', '', 'admin@admin.com', '', NULL, NULL, 'RbHHB5gLQv1VPBgMbbwyVu', 1268889823, 1510831234, 1, 'Admin', 'istrator', 'ADMIN', '0'),
 (2, '', 'ken.coleman', '$2y$08$9T2QTrrmSlwzd33RhAI6KePYMSwxPKwjXnnL4rv4ntRD3dfahBv9.', NULL, 'kencoleman73@tiscali.co.uk', NULL, NULL, NULL, NULL, 0, 1514190179, 1, 'Ken', 'Coleman', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `DSO_users_groups`
+-- Table structure for table `surnames_users_groups`
 --
 
-CREATE TABLE IF NOT EXISTS `DSO_users_groups` (
+CREATE TABLE IF NOT EXISTS `surnames_users_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL,
@@ -28790,10 +28790,10 @@ CREATE TABLE IF NOT EXISTS `DSO_users_groups` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `DSO_users_groups`
+-- Dumping data for table `surnames_users_groups`
 --
 
-INSERT INTO `DSO_users_groups` (`id`, `user_id`, `group_id`) VALUES
+INSERT INTO `surnames_users_groups` (`id`, `user_id`, `group_id`) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 2, 1),
@@ -28802,10 +28802,10 @@ INSERT INTO `DSO_users_groups` (`id`, `user_id`, `group_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `DSO_variant`
+-- Table structure for table `surnames_variant`
 --
 
-CREATE TABLE IF NOT EXISTS `DSO_variant` (
+CREATE TABLE IF NOT EXISTS `surnames_variant` (
   `variant_id` int(12) unsigned NOT NULL AUTO_INCREMENT,
   `surname_id` int(12) unsigned NOT NULL,
   `variant` char(255) COLLATE latin1_german2_ci NOT NULL,
@@ -28814,10 +28814,10 @@ CREATE TABLE IF NOT EXISTS `DSO_variant` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=3733 ;
 
 --
--- Dumping data for table `DSO_variant`
+-- Dumping data for table `surnames_variant`
 --
 
-INSERT INTO `DSO_variant` (`variant_id`, `surname_id`, `variant`) VALUES
+INSERT INTO `surnames_variant` (`variant_id`, `surname_id`, `variant`) VALUES
 (1, 1, 'Abram'),
 (2, 2, 'Agborne'),
 (3, 3, 'Ackrode'),
@@ -31129,7 +31129,7 @@ INSERT INTO `DSO_variant` (`variant_id`, `surname_id`, `variant`) VALUES
 (2309, 922, 'Farne'),
 (2310, 923, 'Farnisyd'),
 (2311, 923, 'Farnisyde');
-INSERT INTO `DSO_variant` (`variant_id`, `surname_id`, `variant`) VALUES
+INSERT INTO `surnames_variant` (`variant_id`, `surname_id`, `variant`) VALUES
 (2312, 923, 'Farnysed'),
 (2313, 924, 'Farrowe'),
 (2314, 924, 'Farow'),
@@ -32555,10 +32555,10 @@ INSERT INTO `DSO_variant` (`variant_id`, `surname_id`, `variant`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `DSO_ward`
+-- Table structure for table `surnames_ward`
 --
 
-CREATE TABLE IF NOT EXISTS `DSO_ward` (
+CREATE TABLE IF NOT EXISTS `surnames_ward` (
   `ward_id` int(12) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(255) COLLATE latin1_german2_ci NOT NULL,
   `description` blob,
@@ -32567,10 +32567,10 @@ CREATE TABLE IF NOT EXISTS `DSO_ward` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci AUTO_INCREMENT=130 ;
 
 --
--- Dumping data for table `DSO_ward`
+-- Dumping data for table `surnames_ward`
 --
 
-INSERT INTO `DSO_ward` (`ward_id`, `name`, `description`) VALUES
+INSERT INTO `surnames_ward` (`ward_id`, `name`, `description`) VALUES
 (8, 'Darlingon', NULL),
 (2, 'Chester', NULL),
 (3, 'Darlington', NULL),
@@ -32704,11 +32704,11 @@ INSERT INTO `DSO_ward` (`ward_id`, `name`, `description`) VALUES
 --
 
 --
--- Constraints for table `DSO_users_groups`
+-- Constraints for table `surnames_users_groups`
 --
-ALTER TABLE `DSO_users_groups`
-  ADD CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `DSO_groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `DSO_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `surnames_users_groups`
+  ADD CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `surnames_groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `surnames_users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -1,10 +1,10 @@
-DROP TABLE IF EXISTS `DSO_groups`;
+DROP TABLE IF EXISTS `surnames_groups`;
 
 #
-# Table structure for table 'DSO_groups'
+# Table structure for table 'surnames_groups'
 #
 
-CREATE TABLE `DSO_groups` (
+CREATE TABLE `surnames_groups` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `description` varchar(100) NOT NULL,
@@ -12,20 +12,20 @@ CREATE TABLE `DSO_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
-# Dumping data for table 'DSO_groups'
+# Dumping data for table 'surnames_groups'
 #
 
-INSERT INTO `DSO_groups` (`id`, `name`, `description`) VALUES
+INSERT INTO `surnames_groups` (`id`, `name`, `description`) VALUES
      (1,'admin','Administrator'),
      (2,'members','General User');
 
-DROP TABLE IF EXISTS `DSO_users`;
+DROP TABLE IF EXISTS `surnames_users`;
 
 #
-# Table structure for table 'DSO_users'
+# Table structure for table 'surnames_users'
 #
 
-CREATE TABLE `DSO_users` (
+CREATE TABLE `surnames_users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip_address` varchar(15) NOT NULL,
   `username` varchar(100) NULL,
@@ -48,20 +48,20 @@ CREATE TABLE `DSO_users` (
 
 
 #
-# Dumping data for table 'DSO_users'
+# Dumping data for table 'surnames_users'
 #
 
-INSERT INTO `DSO_users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
+INSERT INTO `surnames_users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
      ('1','127.0.0.1','administrator','$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36','','admin@admin.com','',NULL,'1268889823','1268889823','1', 'Admin','istrator','ADMIN','0');
 
 
-DROP TABLE IF EXISTS `DSO_users_groups`;
+DROP TABLE IF EXISTS `surnames_users_groups`;
 
 #
-# Table structure for table 'DSO_users_groups'
+# Table structure for table 'surnames_users_groups'
 #
 
-CREATE TABLE `DSO_users_groups` (
+CREATE TABLE `surnames_users_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL,
@@ -69,21 +69,21 @@ CREATE TABLE `DSO_users_groups` (
   KEY `fk_users_groups_users1_idx` (`user_id`),
   KEY `fk_users_groups_groups1_idx` (`group_id`),
   CONSTRAINT `uc_users_groups` UNIQUE (`user_id`, `group_id`),
-  CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `DSO_users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `DSO_groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `surnames_users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `surnames_groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `DSO_users_groups` (`id`, `user_id`, `group_id`) VALUES
+INSERT INTO `surnames_users_groups` (`id`, `user_id`, `group_id`) VALUES
      (1,1,1),
      (2,1,2);
 
-DROP TABLE IF EXISTS `DSO_login_attempts`;
+DROP TABLE IF EXISTS `surnames_login_attempts`;
 
 #
-# Table structure for table 'DSO_login_attempts'
+# Table structure for table 'surnames_login_attempts'
 #
 
-CREATE TABLE `DSO_login_attempts` (
+CREATE TABLE `surnames_login_attempts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip_address` varchar(15) NOT NULL,
   `login` varchar(100) NOT NULL,
